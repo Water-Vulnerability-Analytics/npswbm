@@ -1,21 +1,18 @@
 # Downloads WBM outputs derived from DayMET (most recent iteration of the WBM). Found at:
 # http://www.yellowstone.solutions/thredds/catalog/daily_or_monthly/v2_historical/monthly/catalog.html
 
-getHistoricWBMDayMET <- function(park, aoi, path = "data/", 
+getHistoricWBMDayMET <- function(park, aoi, path = "data/park", 
                                  wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")
 ) {
   
   options(timeout = 900)
-  sf::sf_use_s2(FALSE)
-  
+
   if(!dir.exists(paste0(getwd(),"/templeod_dataall/"))){dir.create(file.path(getwd(),"/templeod_dataall/"), showWarnings = FALSE)}
   if(!dir.exists(paste0(getwd(),"/", path, "/", park, "/wbm_daymet_hist/"))){dir.create(file.path(paste0(getwd(),"/", path, "/", park, "/wbm_daymet_hist/")), showWarnings = FALSE)}
   
   years <- 1980:2022
   
   map_dat <- tidyr::crossing(years, wb_vars)
-  
-  start <- Sys.time()
   
   for(i in 1:nrow(map_dat)){
     #http://www.yellowstone.solutions/thredds/fileServer/daily_or_monthly/v2_historical/gridmet_v_1_5_historical/V_1_5_2022_gridmet_historical_rain.nc4
@@ -30,8 +27,7 @@ getHistoricWBMDayMET <- function(park, aoi, path = "data/",
     wb_wb <- stars::read_ncdf("templeod_dataall/data.nc4")
     # Set the CRS for the stars object. For whatever reason, a handful are unknown CRS.
     # Assuming they are the same as the others in the pull:
-    crs <- 4326
-    st_crs(wb_wb) <- crs
+    st_set_crs(wb_wb, 4326)
     wb_lat <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lat") %>% as.data.frame()
     wb_lon <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lon") %>% as.data.frame() 
     
@@ -53,15 +49,13 @@ getHistoricWBMDayMET <- function(park, aoi, path = "data/",
     
     write_csv(table, file = paste0(getwd(), "/", path, "/", park, "/wbm_daymet_hist/", park, "_daymet_", map_dat$wb_vars[i], "_", map_dat$years[i], ".csv"))
     
-    Sys.sleep(1)
-    
+
   }
   
-  end <- Sys.time()
-  
-  end - start
   
   unlink(paste0(getwd(),"/templeod_dataall"), recursive = TRUE)
+  
+  
 }
 
 
