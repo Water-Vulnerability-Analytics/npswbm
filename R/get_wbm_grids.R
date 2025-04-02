@@ -9,7 +9,7 @@
 #' @param aoi_name A character string used to name the file, often a description of the AOI pulled
 #' @param future_years A numeric vector of all future years to pull daily data for
 #' @param historic_years A numeric vector of all historic years to pull daily data for
-#' @param macas The name of the GCMs to pull future data from (ideally pulled from `select_GCMs()`)
+#' @param macas The name of the GCMs to pull future data from (ideally pulled from `select_cfs_rapid()`)
 #' @param wb_var The water balance variable to pull data for: ONE of runoff, soil_water, rain, accumswe, PET, deficit, AET
 #' @param path The file path to save the .tif of all stacked rasters. Automatically creates a subfolder called 'wbm_daily_rasters'
 #' 
@@ -19,7 +19,7 @@ get_wbm_grids <- function(park,
                           aoi_name = "AOI",
                           future_years = 2024:2070, 
                           historic_years = 1980:2023,
-                          macas, #= selected_GCMs[c(1,4),]$GCM, 
+                          macas, #= selected_cfs_rapid[c(1,4),]$GCM, 
                           wb_var, #= "runoff", 
                           path = "data/park/") {
 
