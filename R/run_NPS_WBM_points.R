@@ -77,6 +77,7 @@
 #'   states for subsequent runs.
 #'   
 #' @note Performance scales with (#points × #GCMs × #days).
+#' @export
 run_NPS_WBM_points <- function(points, 
                                climate_data,
                                Direct_Frac = 0, 

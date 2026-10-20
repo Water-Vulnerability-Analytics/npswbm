@@ -13,8 +13,6 @@
 #' @param aspect Aspect of the site (in degrees).
 #' @param shade.coeff (optional) A shade coefficient from 0-1. Default is 1.
 #' @export
-#' get_OudinPET()
-
 get_OudinPET = function(doy, lat, snowpack, tmean, slope, aspect, shade.coeff=NULL){
   d.r = 1 + 0.033*cos((2*pi/365)*doy)
   declin = 0.409*sin((((2*pi)/365)*doy)-1.39)

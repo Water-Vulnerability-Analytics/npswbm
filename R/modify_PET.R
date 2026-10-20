@@ -11,8 +11,6 @@
 #' @param lat Latitude of the site (in degrees).
 #' @param freeze A vector of freeze factor values, calculated from Tmean. Values are 0-1.
 #' @param shade.coeff (optional) A shade coefficient from 0-1. Default is 1.
-#' @export
-#' modify_PET()
 
 modify_PET = function(pet, slope, aspect, lat, freeze, shade.coeff=NULL){
   f.aspect = abs(180 - abs(aspect - 225))

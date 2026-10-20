@@ -26,6 +26,7 @@
 #' 0.0 to 0.5Marginal fit; the model captures some trends but has high error.
 #' < 0.0Poor fit; you would be better off just using the average flow.
 #' 
+#' @export
 NSE <- function(obs, sim) {
   
   # Remove any pairs where either obs or sim is NA
@@ -67,6 +68,7 @@ NSE <- function(obs, sim) {
 #' 0.50 to 0.60: Good fit.
 #' 0.60 to 0.70: Satisfactory fit.
 #' > 0.70: Unsatisfactory fit.
+#' @export
 RSR <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10) # Return high penalty for bad fit
@@ -94,6 +96,7 @@ RSR <- function(obs, sim) {
 #' ±10% to ±15%: Good.
 #' ±15% to ±25%: Satisfactory.
 #' > ±25%: Unsatisfactory.
+#' @export
 PBIAS <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
@@ -118,6 +121,7 @@ PBIAS <- function(obs, sim) {
 #' @param obs Vector of observed values
 #' @param sim Vector of simulated/modeled values
 #' @return Value between 0 and 1.
+#' @export
 COD <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) < 2) return(0) # Need at least 2 points for correlation
@@ -141,6 +145,7 @@ COD <- function(obs, sim) {
 #' @param obs Vector of observed values
 #' @param sim Vector of simulated/modeled values
 #' @return Sum of squares. Lower is better.
+#' @export
 SSE <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
@@ -157,6 +162,7 @@ SSE <- function(obs, sim) {
 #' @param obs Vector of observed values
 #' @param sim Vector of simulated/modeled values
 #' @return Error in data units. Lower is better.
+#' @export
 RMSE <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
@@ -172,6 +178,7 @@ RMSE <- function(obs, sim) {
 #' @param obs Vector of observed values
 #' @param sim Vector of simulated/modeled values
 #' @return Mean error in data units. Lower is better.
+#' @export
 MAE <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)

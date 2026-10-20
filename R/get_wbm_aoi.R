@@ -17,14 +17,14 @@
 #' @return A data.frame containing daily timeseries of the spatial mean for 
 #'          each water balance variable formatted like the 
 #'          get_centroid_wbm_data output.
-
+#' @export
 get_wbm_aoi <- function(park,
                         aoi,
                         aoi_name,
                         gcm = select_cfs$GCM,
                         download = FALSE,
                         aoi_average = FALSE,
-                        path = "data/park/") {
+                        path = wava_data_path("park/")) {
   
   if (download == TRUE) {
     print("Downloading gridded WBM. This may take several minutes to hours...\n\n")

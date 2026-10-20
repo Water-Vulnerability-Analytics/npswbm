@@ -42,6 +42,7 @@
 #' plus the original attributes of `points` (when `area_weighted = FALSE`) or
 #' the non-geometry attributes of intersecting `grid` cells (when `TRUE`).
 #' 
+#' @export
 get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid = NULL) {
   
   if (!(exists("dem") && exists("soil")  && exists("jtemp"))) {

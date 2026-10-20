@@ -9,8 +9,6 @@
 #' Calculates mean saturation vapor pressure (kPa) of air based on 
 #' temperature (deg C).
 #' @param temp Temperature (deg C)
-#' @export
-#' get_svp()
 
 get_svp = function(temp){
   svp = 0.6108*exp((17.27*temp)/(temp + 237.3))

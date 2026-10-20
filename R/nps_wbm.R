@@ -73,6 +73,7 @@
 #' 
 #' # Hock, 2003 (https://doi.org/10.1016/S0022-1694(03)00257-9)
 #    Melt factor for Goosebury Creek in Utah is 2.5
+#' @export
 nps_wbm <- function(DailyWB, 
                     point_params, 
                     Direct_Frac = 0, # CSU ADDITION

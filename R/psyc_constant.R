@@ -6,8 +6,6 @@
 #'
 #' Calculates the psychrometric constant relating partial pressure of water in air to the air temperature, based on atmospheric pressure. Calls the atm_press() function to estimate atmospheric pressure from elevation.
 #' @param elev Elevation (m)
-#' @export
-#' psyc_constant()
 
 psyc_constant = function(elev){
   atm.press = atm_press(elev)

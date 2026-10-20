@@ -6,8 +6,6 @@
 #'
 #' Estimates atmospheric pressure (kPa) at a given elevation.
 #' @param elev Elevation (m).
-#' @export
-#' atm_press()
 
 atm_press = function(elev){
   atm.press = 101.3*((293 - 0.0065*elev)/293)^5.26

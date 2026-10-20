@@ -8,8 +8,6 @@
 #' @param doy Day-of-year (Julian date)
 #' @param lat Latitude (degrees)
 #' @param elev Elevation (m)
-#' @export
-#' clear_sky_rad()
 
 clear_sky_rad = function(doy, lat, elev){
   d.r = 1 + 0.033*cos(((2*pi)/365)*doy)

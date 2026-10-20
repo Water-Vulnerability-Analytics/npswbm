@@ -11,8 +11,6 @@
 #' @param wind (optional) An estimated value for daily average wind speeds (m/s). Use if input data frame does not contain daily wind speed values.
 #' Default at 2.2 m/s (5mph)
 #' @export
-#' ET_PenmanMonteith_daily()
-
 ET_PenmanMonteith_daily = function(x, elev, lat, wind=2.2){
   #Inputs
   tmax = x$tmax_C

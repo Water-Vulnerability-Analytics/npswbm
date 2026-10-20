@@ -11,8 +11,6 @@
 #' @param swc.max The maximum soil water-holding capacity of the soil layer being assessed.
 #' @param swc.0 (optional) The initial soil water content value. Default is 0.
 #' @export
-#' get_soil()
-
 get_soil = function(w, swc.0=NULL, pet, w_pet, swc.max){
   swc.i = ifelse(!is.null(swc.0), swc.0,0)
   soil=c()

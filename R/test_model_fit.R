@@ -16,7 +16,7 @@
 #' @param ... Additional arguments passed to the objective function.
 #'
 #' @return Optimized parameters and objective function value.
-
+#' @export
 test_model_fit <- function(params, 
                            calibration_function = NULL,
                            calibration_function_args = NULL,

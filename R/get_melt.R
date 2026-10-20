@@ -11,8 +11,6 @@
 #' @param snow A time series vector of snowfall values.
 #' @param sp.0 (optional) Initial snowpack value. Default is 0.
 #' @export
-#' get_melt()
-
 get_melt = function(tmean, jtemp, hock, snow, sp.0=NULL){
   sp.0 <- ifelse(!is.null(sp.0), sp.0, 0)
   melt <- vector()

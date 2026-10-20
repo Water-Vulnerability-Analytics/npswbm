@@ -6,8 +6,6 @@
 #'
 #' Calculates the slope of the saturation vapor curve for a given temperature.
 #' @param temp A time series vector or single value of temperatures (deg C).
-#' @export
-#' vapor_curve()
 
 vapor_curve = function(temp){
   vap.curve = 4098*(0.6108*exp((17.27*temp/(temp+237.3)))/(temp+237.3)^2)

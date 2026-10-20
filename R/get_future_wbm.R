@@ -13,7 +13,8 @@
 #' @param path The file path to save the .tif of all stacked rasters. Automatically creates a subfolder called 'wbm_daily_rasters'
 #' 
 #' @return A SpatRaster with a layer for each daily value of specified wbm variable
-get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = "data/park/") {
+#' @export
+get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = wava_data_path("park/")) {
   # check that path to save files to exists
   if (!dir.exists(paste0(getwd(), "/", path, "/", park, "/wbm_daily_rasters/"))) {
     dir.create(file.path(paste0(

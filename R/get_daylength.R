@@ -9,8 +9,6 @@
 #' @param dates A series of dates containing year, month, and day
 #' @param lat Latitude (degrees)
 #' @export
-#' get_daylength()
-
 get_daylength = function(dates, lat) {
   yday <- as.numeric(strftime(dates, "%j"))
   dayl_h <- geosphere::daylength(lat, yday)

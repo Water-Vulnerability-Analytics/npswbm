@@ -28,6 +28,7 @@
 #' Note, all parameters with time have same time unit as df$date. So, if daily,
 #' then days.
 #' 
+#' @export
 runoff_routing_snow_fun <- function(df, 
                                tau_q_rain, 
                                tau_s_rain, 

@@ -27,7 +27,7 @@
 #' 
 #' @return Dataframe containing the total routed flow (Q_tot).
 #'         If return_components is TRUE, also includes Q_slow, Q_quick, and Q_gw_recharge.
-
+#' @export
 runoff_routing_gw <- function(df, tau_q, tau_s, vs, delay = 0, loss = 0, 
                               baseflow = 0, 
                               runoff_col = "runoff_in_wbm",

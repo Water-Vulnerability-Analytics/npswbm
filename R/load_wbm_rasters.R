@@ -4,11 +4,11 @@
 #'
 #' @param crs Character string or CRS object. The coordinate reference system to project all 
 #'   rasters to. This should match the CRS of the points where the WBM will be applied.
-
+#' @export
 load_wbm_rasters <- function(crs) {
   
   # Load DEM (from NPS WBM group) -> in meters
-  dem <<- terra::rast(here::here('data/all/elevation_cropped.tif'))
+  dem <<- terra::rast(wava_data_path("all", "elevation_cropped.tif"))
   
   if(is.na(sf::st_crs(dem)) || crs != sf::st_crs(dem)){
     
@@ -18,7 +18,7 @@ load_wbm_rasters <- function(crs) {
   }
   
   # Load storage properties raster (from NPS WBM group)
-  soil <<- terra::rast(here::here('data/all/water_storage.tif')) * 10 #cm to mm
+  soil <<- terra::rast(wava_data_path("all", "water_storage.tif")) * 10 #cm to mm
     
   if(is.na(sf::st_crs(soil)) || crs != sf::st_crs(soil)){
     
@@ -38,7 +38,7 @@ load_wbm_rasters <- function(crs) {
                             v = "aspect", 
                             unit = "degrees")
   
-  jtemp <<- terra::rast("data/all/merged_jennings2.tif")
+  jtemp <<- terra::rast(wava_data_path("all", "merged_jennings2.tif"))
   st_crs(jtemp, 4326)
   
   

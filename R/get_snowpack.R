@@ -10,8 +10,6 @@
 #' @param melt A time series vector of snowmelt.
 #' @param sp.0 (optional) Initial snowpack value. Default is 0.
 #' @export
-#' get_snowpack()
-
 get_snowpack = function(jtemp, snow, melt, sp.0=NULL){
   low_thresh_temp = jtemp - 3
   sp.i = ifelse(!is.null(sp.0), sp.0, 0)

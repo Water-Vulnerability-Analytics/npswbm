@@ -8,8 +8,6 @@
 #' @param ppt A vector of precipitation values.
 #' @param freeze A vector of freeze factor values, calculated from average temperature and Jennings et al., 2018. Values are 0-1.
 #' @export
-#' get_rain()
-
 get_rain = function(ppt, freeze){
   rain = ppt*freeze
   return(rain)

@@ -8,8 +8,6 @@
 #' @param jtemp the Jennings temperature extracted from the raster based on latitude and longitude.
 #' @param tmean A vector of daily mean temperatures (deg C).
 #' @export
-#' get_freeze()
-
 get_freeze = function(jtemp, tmean){
   freeze=ifelse(tmean<= (jtemp-3),0,
                 ifelse(tmean>=(jtemp+3),1,

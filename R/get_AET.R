@@ -10,8 +10,6 @@
 #' @param swc A time series vector of soil water content.
 #' @param swc.0 (optional) The initial soil water content value. Default is 0.
 #' @export
-#' get_AET()
-
 get_AET = function(w, pet, swc, swc.0=NULL){
   swc.i = ifelse(!is.null(swc.0), swc.0, 0)
   AET = c()

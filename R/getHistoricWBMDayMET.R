@@ -1,7 +1,8 @@
 # Downloads WBM outputs derived from DayMET (most recent iteration of the WBM). Found at:
 # http://www.yellowstone.solutions/thredds/catalog/daily_or_monthly/v2_historical/monthly/catalog.html
 
-getHistoricWBMDayMET <- function(park, aoi, path = "data/park", 
+#' @export
+getHistoricWBMDayMET <- function(park, aoi, path = wava_data_path("park"), 
                                  wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")
 ) {
   

@@ -8,8 +8,6 @@
 #' @param tmean A time series vector of daily mean temperatures (deg C).
 #' @param tbase (optional) A threshold temperature, above which growing degree-days are calculated. Default is 0.
 #' @export
-#' get_GDD()
-
 get_GDD = function(tmean, tbase=NULL){
   tb = ifelse(!is.null(tbase), tbase, 0)
   GDD = ifelse(tmean < tb, 0, tmean - tb)

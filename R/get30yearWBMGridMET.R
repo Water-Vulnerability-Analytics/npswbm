@@ -11,13 +11,14 @@
 #' @param path directory to save raster stack to
 #' @param filename_prefix a name to append to filename that describes the AOI for the saved raster stack
 #' @return A SpatRaster stack of all downloaded rasters
+#' @export
 get30yearWBMGridMET <- function(aoi,
                                 variable = c("runoff"),
                                 cf,
                                 historic_years = c("1981_2010"),
                                 future_years = c("2040_2069", "2070_2099"),
                                 save = TRUE,
-                                path = "data/all",
+                                path = wava_data_path("all"),
                                 filename_prefix) {
   # Set lookup vars
   scenarios <- c('rcp45', 'rcp85', "historical")
@@ -115,7 +116,7 @@ get30yearWBMGridMET <- function(aoi,
 #                                     variable = variable,
 #                                     cf = cf,
 #                                     save = TRUE,
-#                                     path = "data/all",
+#                                     path = wava_data_path("all"),
 #                                     filename_prefix = "BRCA")
 # 
 # # inspect maps

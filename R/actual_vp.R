@@ -9,8 +9,6 @@
 #' @param rhmin Daily minimum relative humidity (percent).
 #' @param tmax Daily maximum temperature (deg C).
 #' @param tmin Daily minimum temperature (deg C).
-#' @export
-#' actual_vp()
 
 actual_vp = function(rhmax, rhmin, tmax, tmin) {
   e.tmax = get_svp(tmax)
