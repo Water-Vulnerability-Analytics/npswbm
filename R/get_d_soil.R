@@ -10,6 +10,6 @@
 
 get_d_soil=function(swc, swc.0=NULL){
   swc.0 = ifelse(!is.null(swc.0), swc.0, 0)
-  d_soil = swc - lag(swc, default=swc.0)
+  d_soil = swc - dplyr::lag(swc, default=swc.0)
   return(d_soil)
 }

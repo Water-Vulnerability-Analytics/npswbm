@@ -10,7 +10,7 @@ get_future_wbm(
   years = 2023:2070,
   macas,
   wb_var,
-  path = wava_data_path("park/")
+  path = wavacore::wava_data_path("park/")
 )
 }
 \arguments{

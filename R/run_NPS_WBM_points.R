@@ -177,8 +177,8 @@ run_NPS_WBM_points <- function(points,
       
       # Save soil storage and snowpack from final timestep
       if (ret_final_cond == TRUE) {
-        points_params[i,]$final_soil <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "SOIL") %>% tail(n = 1) %>% pull(vals)
-        points_params[i,]$final_snowpack <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "PACK") %>% tail(n = 1) %>% pull(vals)
+        points_params[i,]$final_soil <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "SOIL") %>% utils::tail(n = 1) %>% dplyr::pull(vals)
+        points_params[i,]$final_snowpack <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "PACK") %>% utils::tail(n = 1) %>% dplyr::pull(vals)
       }
       
     }
@@ -192,7 +192,7 @@ run_NPS_WBM_points <- function(points,
     
       if (aggregate == TRUE) {
         DailyWB_all[[j]] <- DailyWB_all[[j]] %>%
-          dplyr::summarize(vals = weighted.mean(vals, w = area_weight_norm, na.rm = TRUE), .groups = "drop")
+          dplyr::summarize(vals = stats::weighted.mean(vals, w = area_weight_norm, na.rm = TRUE), .groups = "drop")
 
       }
       

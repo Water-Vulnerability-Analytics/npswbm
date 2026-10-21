@@ -18,15 +18,15 @@ get30yearWBMGridMET <- function(aoi,
                                 historic_years = c("1981_2010"),
                                 future_years = c("2040_2069", "2070_2099"),
                                 save = TRUE,
-                                path = wava_data_path("all"),
+                                path = wavacore::wava_data_path("all"),
                                 filename_prefix) {
   # Set lookup vars
   scenarios <- c('rcp45', 'rcp85', "historical")
   rcp <- gsub("^.*\\.", "", cf)
   cfs <- gsub("\\.", "_", cf)
   call_vars <- tidyr::crossing(variable, cfs, years = future_years) %>%
-    mutate(rcp = gsub("^.*\\_", "", cfs)) %>%
-    bind_rows(
+    dplyr::mutate(rcp = gsub("^.*\\_", "", cfs)) %>%
+    dplyr::bind_rows(
       tidyr::crossing(
         variable,
         rcp = "historical",
@@ -37,7 +37,7 @@ get30yearWBMGridMET <- function(aoi,
     # fix name for "MIROC-ESM-CHEM" to make sure it matches what WBM link says
     ## also note, for now since WBM does not have MIROC-ESM for rcp 4.5, this will
     ## instead use rcp 8.5 if that was a selected model
-    mutate(cfs = if_else(str_detect(cfs, "MIROC-ESM"), "MIROC-ESM-CHEM_rcp85", cfs))
+    dplyr::mutate(cfs = dplyr::if_else(stringr::str_detect(cfs, "MIROC-ESM"), "MIROC-ESM-CHEM_rcp85", cfs))
   
   # Define web call URLs, only pulls annual means
   base_call <- "http://screenedcleanedsummaries.s3-website-us-west-2.amazonaws.com/"
@@ -59,11 +59,11 @@ get30yearWBMGridMET <- function(aoi,
   tif_list <- purrr::map(all_calls, function(x) {
     #download a single .tif
     temp1 <- tempfile()
-    download.file(x, destfile = temp1, method = "curl")
+    utils::download.file(x, destfile = temp1, method = "curl")
     
     # read and crop raster to AOI
     wb_dat <- terra::rast(temp1) %>%
-      terra::crop(sf::st_transform(aoi, st_crs(.)))
+      terra::crop(sf::st_transform(aoi, sf::st_crs(.)))
     
     # assign name to raster layer
     names(wb_dat) <- gsub(".*V_1_5_annual_", "", x)
@@ -88,7 +88,7 @@ get30yearWBMGridMET <- function(aoi,
       dir.create(out_dir)
     }
     
-    writeRaster(
+    terra::writeRaster(
       tif_stack,
       filename = paste0(out_dir, filename_prefix, "_wbm_30yr_annual_rasters.tif"),
       overwrite = TRUE

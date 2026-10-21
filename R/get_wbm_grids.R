@@ -22,7 +22,7 @@ get_wbm_grids <- function(park,
                           historic_years = 1980:2023,
                           macas, #= selected_cfs_rapid[c(1,4),]$GCM, 
                           wb_var, #= "runoff", 
-                          path = wava_data_path("park/")) {
+                          path = wavacore::wava_data_path("park/")) {
 
     # check that path to save files to exists
   if (!dir.exists(paste0(getwd(), "/", path, "/", park))) {
@@ -42,7 +42,7 @@ get_wbm_grids <- function(park,
   
   
   # transform aoi to crs of WBM data
-  aoi <- st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
+  aoi <- sf::st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
   
   # download each raster file to temp directory
   future_rasters <- furrr::future_map(1:nrow(map_dat), function(x) {
@@ -76,9 +76,9 @@ get_wbm_grids <- function(park,
   final_future_stack <- terra::rast(future_rasters)
   
   ## saved CRS and extent from raw downloaded file, that info does not attach to files pulled directly from URL
-  crs(final_future_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  terra::crs(final_future_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
   
-  ext(final_future_stack) <- c(-2060750, 2639250, -1915500, 1384500)
+  terra::ext(final_future_stack) <- c(-2060750, 2639250, -1915500, 1384500)
   
   # crop to aoi
   final_future_stack <- terra::crop(final_future_stack, aoi)
@@ -111,7 +111,7 @@ get_wbm_grids <- function(park,
   map_dat <- tidyr::crossing(historic_years, wb_var)
   
   # transform aoi to crs of WBM data
-  aoi <- st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
+  aoi <- sf::st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
   
   # download each raster file to temp directory
   historic_rasters <- furrr::future_map(1:nrow(map_dat), function(x) {
@@ -138,9 +138,9 @@ get_wbm_grids <- function(park,
   final_historic_stack <- terra::rast(historic_rasters)
   
   ## saved CRS and extent from raw downloaded file, that info does not attach to files pulled directly from URL
-  crs(final_historic_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  terra::crs(final_historic_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
   
-  ext(final_historic_stack) <- c(-2060750, 2639250, -1915500, 1384500)
+  terra::ext(final_historic_stack) <- c(-2060750, 2639250, -1915500, 1384500)
   
   # crop to aoi
   final_historic_stack <- terra::crop(final_historic_stack, aoi)

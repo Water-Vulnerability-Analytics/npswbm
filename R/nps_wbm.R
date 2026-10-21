@@ -87,7 +87,7 @@ nps_wbm <- function(DailyWB,
                     Shade.Coeff = 1,
                     T.Base = 0) {
   
-  DailyWB$doy <- yday(DailyWB$date)
+  DailyWB$doy <- lubridate::yday(DailyWB$date)
   DailyWB$daylength <- get_daylength(DailyWB$date, DailyWB$y)
   DailyWB$jtemp <- as.numeric(point_params$J.Temp) #as.numeric(get_jtemp(DailyWB$y, DailyWB$x)) 
   DailyWB$F <- get_freeze(DailyWB$jtemp, DailyWB$tmean_C)
@@ -130,11 +130,11 @@ nps_wbm <- function(DailyWB,
   
   # Prepare output dataframe
   DailyWB_out <- DailyWB %>%
-    data.table() %>%
-    ungroup() %>%
+    data.table::data.table() %>%
+    dplyr::ungroup() %>%
     dplyr::select(date, x, y, GCM, ppt_mm, "RUNOFF" = W_ET_DSOIL, RAIN, SNOW, MELT,AET,PET_mod, tmean_C,"excess_wat" = STORAGE_ADD, PACK, SOIL) %>%
-    pivot_longer(-c(date,x,y, GCM), 
+    tidyr::pivot_longer(-c(date,x,y, GCM), 
                  values_to = "vals", 
                  names_to = "vars") %>%
-    mutate(vals = ifelse(vars == "tmean_C", vals, vals /25.4)) # mm to in for all but temp
+    dplyr::mutate(vals = ifelse(vars == "tmean_C", vals, vals /25.4)) # mm to in for all but temp
 }

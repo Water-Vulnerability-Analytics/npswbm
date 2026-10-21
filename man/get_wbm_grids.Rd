@@ -12,7 +12,7 @@ get_wbm_grids(
   historic_years = 1980:2023,
   macas,
   wb_var,
-  path = wava_data_path("park/")
+  path = wavacore::wava_data_path("park/")
 )
 }
 \arguments{

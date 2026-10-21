@@ -14,7 +14,7 @@
 #' 
 #' @return A SpatRaster with a layer for each daily value of specified wbm variable
 #' @export
-get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = wava_data_path("park/")) {
+get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = wavacore::wava_data_path("park/")) {
   # check that path to save files to exists
   if (!dir.exists(paste0(getwd(), "/", path, "/", park, "/wbm_daily_rasters/"))) {
     dir.create(file.path(paste0(
@@ -28,10 +28,10 @@ get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = w
   
   
   # transform aoi to crs of WBM data
-  aoi <- st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
+  aoi <- sf::st_transform(aoi, crs = "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
   
   # download each raster file to temp directory
-  rasters <- map(1:nrow(map_dat), function(x) {
+  rasters <- purrr::map(1:nrow(map_dat), function(x) {
     call <- paste0(
       "/vsicurl/",
       "http://www.yellowstone.solutions/thredds/fileServer/daily_or_monthly/gcm/",
@@ -62,9 +62,9 @@ get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = w
   final_stack <- terra::rast(rasters)
   
   ## saved CRS and extent from raw downloaded file, that info does not attached to files pulled directly from URL
-  crs(final_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
+  terra::crs(final_stack) <- "+proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"
   
-  ext(final_stack) <- c(-2060750, 2639250, -1915500, 1384500)
+  terra::ext(final_stack) <- c(-2060750, 2639250, -1915500, 1384500)
   
   # crop to aoi
   final_stack <- terra::crop(final_stack, aoi)

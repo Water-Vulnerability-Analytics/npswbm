@@ -38,10 +38,10 @@ runoff_routing_gw <- function(df, tau_q, tau_s, vs, delay = 0, loss = 0,
   
   # Ensure input is data.table
   if (!inherits(df, "data.table")) {
-    df <- as.data.table(df)
+    df <- data.table::as.data.table(df)
   }
   
-  setkeyv(df, date_col)
+  data.table::setkeyv(df, date_col)
   stopifnot(all(c(tau_s, tau_q) >= 0))
   
   # Extract runoff data

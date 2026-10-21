@@ -27,6 +27,7 @@ Imports:
     furrr,
     geosphere,
     lubridate,
+    magrittr,
     purrr,
     raster,
     readr,
