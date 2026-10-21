@@ -2,7 +2,7 @@
 # http://www.yellowstone.solutions/thredds/catalog/daily_or_monthly/v2_historical/monthly/catalog.html
 
 #' @export
-getHistoricWBMDayMET <- function(park, aoi, path = wava_data_path("park"), 
+getHistoricWBMDayMET <- function(park, aoi, path = wavacore::wava_data_path("park"), 
                                  wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")
 ) {
   
@@ -21,34 +21,34 @@ getHistoricWBMDayMET <- function(park, aoi, path = wava_data_path("park"),
                    map_dat$years[i], "_", map_dat$wb_vars[i], "_monthly.nc4")
     
     temp1 <- tempfile()
-    download.file(paste0(call), destfile = "templeod_dataall/data.nc4")#, method = "curl")
+    utils::download.file(paste0(call), destfile = "templeod_dataall/data.nc4")#, method = "curl")
     
     #wb_crop <- ncdf4::nc_open("templeod_dataall/data.nc4")
     #wb_crop <- terra::rast("templeod_dataall/data.nc4")
     wb_wb <- stars::read_ncdf("templeod_dataall/data.nc4")
     # Set the CRS for the stars object. For whatever reason, a handful are unknown CRS.
     # Assuming they are the same as the others in the pull:
-    st_set_crs(wb_wb, 4326)
+    sf::st_set_crs(wb_wb, 4326)
     wb_lat <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lat") %>% as.data.frame()
     wb_lon <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lon") %>% as.data.frame() 
     
     aoi <- aoi %>%
-      sf::st_transform(st_crs(wb_wb))
+      sf::st_transform(sf::st_crs(wb_wb))
     
-    wb_wb_crop <- st_crop(wb_wb, aoi, crop = TRUE) %>% raster::as.data.frame(., xy = TRUE)
+    wb_wb_crop <- sf::st_crop(wb_wb, aoi, crop = TRUE) %>% raster::as.data.frame(., xy = TRUE)
     
     table <- wb_wb_crop %>%
-      left_join(wb_lat, by = c("x", "y")) %>%
-      left_join(wb_lon, by = c("x", "y")) %>%
+      dplyr::left_join(wb_lat, by = c("x", "y")) %>%
+      dplyr::left_join(wb_lon, by = c("x", "y")) %>%
       # cant get the projections to line up -_-
       #st_as_sf(., coords = c("lon", "lat"), crs = 4326) %>%
-      mutate(var = names(.)[4]) %>%
-      rename(val = 4) %>%
-      filter(!is.na(val))
+      dplyr::mutate(var = names(.)[4]) %>%
+      dplyr::rename(val = 4) %>%
+      dplyr::filter(!is.na(val))
     
     #mapview(table) + mapview (aoi)
     
-    write_csv(table, file = paste0(getwd(), "/", path, "/", park, "/wbm_daymet_hist/", park, "_daymet_", map_dat$wb_vars[i], "_", map_dat$years[i], ".csv"))
+    readr::write_csv(table, file = paste0(getwd(), "/", path, "/", park, "/wbm_daymet_hist/", park, "_daymet_", map_dat$wb_vars[i], "_", map_dat$years[i], ".csv"))
     
 
   }

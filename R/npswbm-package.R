@@ -1,24 +1,11 @@
 #' @keywords internal
 "_PACKAGE"
 
-## Functions from other packages that the code calls without a `pkg::` prefix.
-## The playground got these from `library()` calls in setup.R.
-#' @importFrom data.table as.data.table data.table setkeyv
-#' @importFrom dplyr all_of arrange bind_cols bind_rows contains filter
-#' @importFrom dplyr group_by if_else lag last left_join mutate pull rename
-#' @importFrom dplyr summarize_all sym ungroup
-#' @importFrom lubridate yday
-#' @importFrom purrr map
-#' @importFrom readr write_csv
-#' @importFrom sf st_crop st_crs st_set_crs st_transform
-#' @importFrom stats weighted.mean
-#' @importFrom stringr str_detect str_replace_all
-#' @importFrom terra writeRaster
-#' @importFrom tidyr drop_na fill pivot_longer pivot_wider separate
-#' @importFrom terra `crs<-` `ext<-`
-#' @importFrom utils download.file tail
-#' @importFrom wavacore wava_data_path
-NULL
+## Functions from other packages are called as `pkg::fun()`. The only import
+## is `%>%` (operators can't be called with `::`), see utils-pipe.R.
+
+## Lets data.table syntax (`dt[, x := ...]`) work without importing data.table.
+.datatable.aware <- TRUE
 
 ## Column names used inside dplyr and data.table calls.
 utils::globalVariables(c(

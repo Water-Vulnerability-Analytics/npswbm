@@ -12,7 +12,7 @@ get_wbm_aoi(
   gcm = select_cfs$GCM,
   download = FALSE,
   aoi_average = FALSE,
-  path = wava_data_path("park/")
+  path = wavacore::wava_data_path("park/")
 )
 }
 \arguments{

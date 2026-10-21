@@ -51,11 +51,11 @@ runoff_routing_snow_fun <- function(df,
   if (length(missing_dates) > 0 & length(missing_dates) <= 5) {
     
     df <- data.frame(date = full_dates) %>%
-      left_join(., df, by = "date") %>%
-      arrange(date) %>%
-      fill(!!sym(runoff_col), .direction = "downup") %>%
-      fill(!!sym(melt_col), .direction = "downup") %>%
-      fill(!!sym(rain_col), .direction = "downup")
+      dplyr::left_join(., df, by = "date") %>%
+      dplyr::arrange(date) %>%
+      tidyr::fill(!!dplyr::sym(runoff_col), .direction = "downup") %>%
+      tidyr::fill(!!dplyr::sym(melt_col), .direction = "downup") %>%
+      tidyr::fill(!!dplyr::sym(rain_col), .direction = "downup")
     
     missing_idx <- match(missing_dates,df$date)
     
@@ -67,11 +67,11 @@ runoff_routing_snow_fun <- function(df,
   # Calculate the fraction of runoff that is from snowmelt
   df <- df %>%
     dplyr::mutate(melt_frac = 
-                    ifelse(!!sym(melt_col) + !!sym(rain_col) > 0, 
-                           !!sym(melt_col) / (!!sym(melt_col) + !!sym(rain_col)),
+                    ifelse(!!dplyr::sym(melt_col) + !!dplyr::sym(rain_col) > 0, 
+                           !!dplyr::sym(melt_col) / (!!dplyr::sym(melt_col) + !!dplyr::sym(rain_col)),
                            0),
-                  melt_runoff = melt_frac * !!sym(runoff_col),
-                  rain_runoff = (1- melt_frac) * !!sym(runoff_col))
+                  melt_runoff = melt_frac * !!dplyr::sym(runoff_col),
+                  rain_runoff = (1- melt_frac) * !!dplyr::sym(runoff_col))
   
   # Ensure all recession coefficients are non-negative:
   stopifnot(all(c(tau_s_rain, tau_q_rain, tau_s_melt) >= 0))
@@ -123,11 +123,11 @@ runoff_routing_snow_fun <- function(df,
   
   # Apply delay to flow components if specified
   if (delay != 0) {
-    Xsr <- lag(Xsr, delay)  # Delay slowflow rain
+    Xsr <- dplyr::lag(Xsr, delay)  # Delay slowflow rain
     Xsr[is.na(Xsr)] <- 0 # Fill missing values with 0
-    Xqr <- lag(Xqr, delay)
+    Xqr <- dplyr::lag(Xqr, delay)
     Xqr[is.na(Xqr)] <- 0
-    Xsm <- lag(Xsm, delay)
+    Xsm <- dplyr::lag(Xsm, delay)
     Xsm[is.na(Xsm)] <- 0
   }
   
@@ -147,11 +147,11 @@ runoff_routing_snow_fun <- function(df,
   
   if (return_components == FALSE) {
     return(df_ret %>%
-           bind_cols(Q_tot = Q_tot)
+           dplyr::bind_cols(Q_tot = Q_tot)
          )
   } else if (return_components == TRUE) {
       return(df_ret %>%
-             bind_cols(Q_slow_rain = Xsr,
+             dplyr::bind_cols(Q_slow_rain = Xsr,
                        Q_quick_rain = Xqr,
                        Q_slow_melt = Xsm,
                        Q_tot = Q_tot)

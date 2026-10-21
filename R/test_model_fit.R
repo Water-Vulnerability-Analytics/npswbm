@@ -34,9 +34,9 @@ test_model_fit <- function(params,
   
   # 2. Extract the result column
   if (!is.null(result_col)) {
-    mod_vals <- mod_vals_all %>% dplyr::pull(all_of(result_col))
+    mod_vals <- mod_vals_all %>% dplyr::pull(dplyr::all_of(result_col))
   } else {
-    mod_vals <- mod_vals_all %>% dplyr::pull(last(names(.)))
+    mod_vals <- mod_vals_all %>% dplyr::pull(dplyr::last(names(.)))
   }
   
   # 3. CRITICAL: Check for NAs or Length Mismatches
@@ -60,7 +60,7 @@ test_model_fit <- function(params,
   }
   
   # Filter to periods with observations
-  dat_cal <- df_cal %>% drop_na(obs_vals)
+  dat_cal <- df_cal %>% tidyr::drop_na(obs_vals)
   
   # 5. Time aggregation (Monthly/Annual)
   if (!is.null(time_ag) && "date" %in% names(dat_cal) && time_ag != "Daily") {

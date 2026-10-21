@@ -13,7 +13,7 @@ get30yearWBMGridMET(
   historic_years = c("1981_2010"),
   future_years = c("2040_2069", "2070_2099"),
   save = TRUE,
-  path = wava_data_path("all"),
+  path = wavacore::wava_data_path("all"),
   filename_prefix
 )
 }

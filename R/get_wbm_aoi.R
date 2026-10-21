@@ -24,7 +24,7 @@ get_wbm_aoi <- function(park,
                         gcm = select_cfs$GCM,
                         download = FALSE,
                         aoi_average = FALSE,
-                        path = wava_data_path("park/")) {
+                        path = wavacore::wava_data_path("park/")) {
   
   if (download == TRUE) {
     print("Downloading gridded WBM. This may take several minutes to hours...\n\n")
@@ -61,13 +61,13 @@ get_wbm_aoi <- function(park,
     terra::rast(rast_list) %>%
       terra::as.data.frame(xy = TRUE) %>%
       # convert to data.table for speed
-      data.table() %>% 
+      data.table::data.table() %>% 
       # remove column names that have NA for the data
-      dplyr::select(-contains("_NA")) %>%
-      pivot_longer(-(x:y), names_to = "var", values_to = "val") %>%
+      dplyr::select(-dplyr::contains("_NA")) %>%
+      tidyr::pivot_longer(-(x:y), names_to = "var", values_to = "val") %>%
       # Add historic to name
       dplyr::mutate(var =
-                      if_else(
+                      dplyr::if_else(
                         grepl(
                           '^accumswe|^runoff|^rain|^PET|^AET|^soil_water|^Deficit',
                           var
@@ -77,11 +77,11 @@ get_wbm_aoi <- function(park,
                       ),
                     val = val / (25.4 * 10)) %>% # 10 = conversion factor, 25.4 = mm to in
       dplyr::mutate(var = gsub("soil_water", "soilwater", var)) %>%
-      separate(var, 
+      tidyr::separate(var, 
                into = c("gcm", "wbm_var", "date"), 
                sep = "_") %>%
       dplyr::mutate(wbm_var = 
-                      str_replace_all(
+                      stringr::str_replace_all(
                         wbm_var, 
                         c("runoff" = "runoff_in", 
                           "rain" = "rain_in", 
@@ -109,12 +109,12 @@ get_wbm_aoi <- function(park,
     wbm_aoi_cleaned <- wbm_aoi %>%
       furrr::future_map_dfr(~ rast_read(.)) %>%
       dplyr::select(-c(x,y)) %>%
-      group_by(date, wbm_var, gcm) %>%
-      summarize_all(.funs = 
+      dplyr::group_by(date, wbm_var, gcm) %>%
+      dplyr::summarize_all(.funs = 
                       list(val = ~ mean(val, na.rm = TRUE)), 
                     .groups = "keep") %>%
-      pivot_wider(names_from = "wbm_var", values_from = "val") %>% 
-      ungroup()
+      tidyr::pivot_wider(names_from = "wbm_var", values_from = "val") %>% 
+      dplyr::ungroup()
     
   } else {
     
