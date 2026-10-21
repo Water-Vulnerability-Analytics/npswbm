@@ -12,7 +12,7 @@
 #' @importFrom readr write_csv
 #' @importFrom sf st_crop st_crs st_set_crs st_transform
 #' @importFrom stats weighted.mean
-#' @importFrom stringr `%>%` str_detect str_replace_all
+#' @importFrom stringr str_detect str_replace_all
 #' @importFrom terra writeRaster
 #' @importFrom tidyr drop_na fill pivot_longer pivot_wider separate
 #' @importFrom terra `crs<-` `ext<-`
