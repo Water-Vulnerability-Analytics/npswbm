@@ -19,7 +19,7 @@
 #' @param climate_data Data frame. Daily climate for every point and model:
 #'   `x`, `y`, `date`, `GCM`, `ppt_mm` and `tmean_C` (and `tmax_C`/`tmin_C`
 #'   for Penman-Monteith), e.g. from `get_climate_historic()` or
-#'   `get_climate_future()` in wavadeepdive with a `GCM` column. Required.
+#'   `get_climate_future()` in npswava with a `GCM` column. Required.
 #' @param Direct_Frac Numeric from 0 to 1. The fraction of rain that goes
 #'   straight to runoff; passed to [nps_wbm()]. Default: `0`.
 #' @param Return_Rate Numeric from 0 to 1. The daily release fraction of the
@@ -93,7 +93,7 @@
 #' @seealso [nps_wbm()], which runs each point; [get_nps_wbm_params()];
 #'   [runoff_routing_gw()] and [runoff_routing_snow_fun()] to route
 #'   `runoff_in_wbm`.
-#' @examplesIf file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))
+#' @examplesIf file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
 #' # Two points with the same made-up climate for one water year
 #' pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))
 #' pts <- sf::st_as_sf(pts, coords = c("x", "y"), crs = 4326, remove = FALSE)

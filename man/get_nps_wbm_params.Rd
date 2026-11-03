@@ -25,7 +25,7 @@ cells are clipped to. Required when \code{area_weighted = TRUE} (stops with an
 error otherwise); ignored when \code{FALSE}. Default: \code{NULL}.}
 
 \item{grid}{sf object or \code{NULL}. The grid cell polygons (e.g. the GridMET
-cells from \code{get_climate_historic(return_grid = TRUE)} in wavadeepdive),
+cells from \code{get_climate_historic(return_grid = TRUE)} in npswava),
 reprojected to the CRS of \code{points} if needed. Required when
 \code{area_weighted = TRUE} (stops with an error otherwise); ignored when
 \code{FALSE}. Default: \code{NULL}.}
@@ -45,7 +45,7 @@ session yet, it calls \code{load_wbm_rasters(crs = terra::crs(points))} first,
 which creates them in the global environment.
 }
 \examples{
-\dontshow{if (file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
 pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))
 pts <- sf::st_as_sf(pts, coords = c("x", "y"), crs = 4326, remove = FALSE)
 get_nps_wbm_params(pts)

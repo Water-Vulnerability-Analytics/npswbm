@@ -20,7 +20,7 @@ function has a help page, e.g. `?nps_wbm`.
 
 ## Install
 
-`npswbm` depends on [`wavacore`](https://github.com/Water-Vulnerability-Analytics/wavacore).
+`npswbm` depends on [`npswavacore`](https://github.com/Water-Vulnerability-Analytics/npswavacore).
 
 ```r
 # install.packages("remotes")
@@ -30,7 +30,7 @@ remotes::install_github("Water-Vulnerability-Analytics/npswbm")
 ## Data
 
 The model reads gridded inputs from the shared WaVA data folder, which is not
-part of this repository. See `wavacore::wava_data_path()` for how that folder
+part of this repository. See `npswavacore::wava_data_path()` for how that folder
 is found.
 
 ## AI Use Disclosure

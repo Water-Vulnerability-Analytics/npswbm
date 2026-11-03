@@ -7,7 +7,7 @@
 getHistoricWBMDayMET(
   park,
   aoi,
-  path = wavacore::wava_data_path("park"),
+  path = npswavacore::wava_data_path("park"),
   wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit",
     "AET")
 )
@@ -23,7 +23,7 @@ to \verb{<path>/<park>/wbm_daymet_hist/<park>_daymet_<variable>_<year>.csv},
 one row per grid cell and month with the value in \code{val} and the
 variable name in \code{var}, replacing existing files; the folders are
 created if needed. Default: \code{park} in
-the shared data folder, see \code{\link[wavacore:wava_data_path]{wavacore::wava_data_path()}}.}
+the shared data folder, see \code{\link[npswavacore:wava_data_path]{npswavacore::wava_data_path()}}.}
 
 \item{wb_vars}{Character vector. The variables to download. Default:
 \code{c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")}.}
@@ -47,7 +47,7 @@ deletes at the end.
 \examples{
 \dontrun{
 # Not run: downloads 43 files per variable from the WBM server
-zion <- wavacore::getParkBoundary("ZION")
+zion <- npswavacore::get_park_boundary("ZION")
 getHistoricWBMDayMET("ZION", zion, path = tempdir(), wb_vars = "runoff")
 }
 }

@@ -20,7 +20,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/Water-Vulnerability-Analytics/npswbm
 BugReports: https://github.com/Water-Vulnerability-Analytics/npswbm/issues
-Remotes: Water-Vulnerability-Analytics/wavacore
+Remotes: Water-Vulnerability-Analytics/npswavacore
 Imports: 
     data.table,
     dplyr,
@@ -38,7 +38,7 @@ Imports:
     terra,
     tidyr,
     utils,
-    wavacore
+    npswavacore
 Config/roxygen2/version: 8.0.0
 Suggests: 
     testthat,

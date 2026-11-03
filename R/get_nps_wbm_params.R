@@ -21,7 +21,7 @@
 #'   cells are clipped to. Required when `area_weighted = TRUE` (stops with an
 #'   error otherwise); ignored when `FALSE`. Default: `NULL`.
 #' @param grid sf object or `NULL`. The grid cell polygons (e.g. the GridMET
-#'   cells from `get_climate_historic(return_grid = TRUE)` in wavadeepdive),
+#'   cells from `get_climate_historic(return_grid = TRUE)` in npswava),
 #'   reprojected to the CRS of `points` if needed. Required when
 #'   `area_weighted = TRUE` (stops with an error otherwise); ignored when
 #'   `FALSE`. Default: `NULL`.
@@ -34,7 +34,7 @@
 #' @export
 #' @seealso [load_wbm_rasters()]; [nps_wbm()] and [run_NPS_WBM_points()],
 #'   which use the parameters.
-#' @examplesIf file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))
+#' @examplesIf file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
 #' pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))
 #' pts <- sf::st_as_sf(pts, coords = c("x", "y"), crs = 4326, remove = FALSE)
 #' get_nps_wbm_params(pts)

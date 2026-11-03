@@ -20,7 +20,7 @@
 #' @param path String. The folder the park subfolder is made in. The file is
 #'   written to `<path>/<park>/wbm_daily_rasters/<park>_<wb_var>_selected_cfs_<first year>_<last year>.tif`,
 #'   replacing an existing file; the folders are created if needed. Default:
-#'   `park/` in the shared data folder, see [wavacore::wava_data_path()].
+#'   `park/` in the shared data folder, see [npswavacore::wava_data_path()].
 #'
 #' @return A SpatRaster with one layer per day, named
 #'   `<model>_<year>_<layer>`.
@@ -36,7 +36,7 @@
 #'                          wb_var = "runoff", path = tempdir())
 #' runoff
 
-get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = wavacore::wava_data_path("park/")) {
+get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = npswavacore::wava_data_path("park/")) {
   # check that path to save files to exists
   if (!dir.exists(paste0(path, "/", park, "/wbm_daily_rasters/"))) {
     dir.create(file.path(paste0(

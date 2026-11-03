@@ -12,7 +12,7 @@ get_wbm_grids(
   historic_years = 1980:2023,
   macas,
   wb_var,
-  path = wavacore::wava_data_path("park/")
+  path = npswavacore::wava_data_path("park/")
 )
 }
 \arguments{
@@ -42,7 +42,7 @@ go to \verb{<path>/<park>/wbm_daily_rasters/}, named
 \verb{<park>_<aoi_name>_<wb_var>_selected_cfs_<years>.tif} and
 \verb{..._historic_gridmet_<years>.tif}, replacing existing files; the
 folders are created if needed. Default: \verb{park/} in the shared data
-folder, see \code{\link[wavacore:wava_data_path]{wavacore::wava_data_path()}}.}
+folder, see \code{\link[npswavacore:wava_data_path]{npswavacore::wava_data_path()}}.}
 }
 \value{
 A list of two SpatRasters, \code{future} and \code{historic}, with one layer

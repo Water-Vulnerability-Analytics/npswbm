@@ -11,7 +11,7 @@ get30yearWBMGridMET(
   historic_years = c("1981_2010"),
   future_years = c("2040_2069", "2070_2099"),
   save = TRUE,
-  path = wavacore::wava_data_path("all"),
+  path = npswavacore::wava_data_path("all"),
   filename_prefix
 )
 }
@@ -24,7 +24,7 @@ park boundary. Required.}
 
 \item{cf}{Character vector. The future climate models, as
 \code{"<model>.<scenario>"}, e.g. \code{"CCSM4.rcp45"} (as picked by
-\code{select_cfs_deep_dive()} in wavadeepdive). Required.}
+\code{select_cfs_deep_dive()} in npswava). Required.}
 
 \item{historic_years}{Character vector. The historical periods: any of
 \code{"1980_1999"}, \code{"1980_2019"}, \code{"1981_2010"} and \code{"2000_2019"}. Default:
@@ -45,7 +45,7 @@ Default: \code{TRUE}.}
 
 \item{path}{String. The folder that gets the \code{wbm_gridmet_30_year}
 subfolder when \code{save = TRUE}. Default: \code{all} in the shared data folder,
-see \code{\link[wavacore:wava_data_path]{wavacore::wava_data_path()}}, so a default call writes there.}
+see \code{\link[npswavacore:wava_data_path]{npswavacore::wava_data_path()}}, so a default call writes there.}
 
 \item{filename_prefix}{String. The start of the file name, describing the
 area (e.g. \code{"BRCA"}). Required when \code{save = TRUE}; not used otherwise.}

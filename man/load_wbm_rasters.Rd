@@ -35,7 +35,7 @@ where \code{\link[=get_nps_wbm_params]{get_nps_wbm_params()}} looks for them; ex
 names are replaced. Reading and projecting takes a minute or so.
 }
 \examples{
-\dontshow{if (file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
 load_wbm_rasters(crs = "epsg:4326")
 dem
 jtemp
