@@ -34,7 +34,7 @@
 #'   Default: `FALSE`.
 #' @param path String. The folder that holds the park subfolders. It must
 #'   end with `/`, because the park code is pasted straight on. Default:
-#'   `park/` in the shared data folder, see [wavacore::wava_data_path()].
+#'   `park/` in the shared data folder, see [npswavacore::wava_data_path()].
 #'
 #' @return A data frame. With `aoi_average = FALSE`: `x`, `y`, `gcm`,
 #'   `wbm_var` (`runoff_in`, `rain_in`, `aet_in`, `pet_in`, `accumswe_in`,
@@ -62,7 +62,7 @@ get_wbm_aoi <- function(park,
                         gcm = select_cfs$GCM,
                         download = FALSE,
                         aoi_average = FALSE,
-                        path = wavacore::wava_data_path("park/")) {
+                        path = npswavacore::wava_data_path("park/")) {
   
   if (download == TRUE) {
     print("Downloading gridded WBM. This may take several minutes to hours...\n\n")

@@ -33,7 +33,7 @@ match \code{climate_data}, e.g. GridMET cell centers. Required.}
 \item{climate_data}{Data frame. Daily climate for every point and model:
 \code{x}, \code{y}, \code{date}, \code{GCM}, \code{ppt_mm} and \code{tmean_C} (and \code{tmax_C}/\code{tmin_C}
 for Penman-Monteith), e.g. from \code{get_climate_historic()} or
-\code{get_climate_future()} in wavadeepdive with a \code{GCM} column. Required.}
+\code{get_climate_future()} in npswava with a \code{GCM} column. Required.}
 
 \item{Direct_Frac}{Numeric from 0 to 1. The fraction of rain that goes
 straight to runoff; passed to \code{\link[=nps_wbm]{nps_wbm()}}. Default: \code{0}.}
@@ -147,7 +147,7 @@ It prints each model and point as it goes. Run time grows with points x
 models x days.
 }
 \examples{
-\dontshow{if (file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))) withAutoprint(\{ # examplesIf}
 # Two points with the same made-up climate for one water year
 pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))
 pts <- sf::st_as_sf(pts, coords = c("x", "y"), crs = 4326, remove = FALSE)

@@ -17,7 +17,7 @@
 #'   `"AET"`, `"soil_water"`, `"Deficit"`. Default: `"runoff"`.
 #' @param cf Character vector. The future climate models, as
 #'   `"<model>.<scenario>"`, e.g. `"CCSM4.rcp45"` (as picked by
-#'   `select_cfs_deep_dive()` in wavadeepdive). Required.
+#'   `select_cfs_deep_dive()` in npswava). Required.
 #' @param historic_years Character vector. The historical periods: any of
 #'   `"1980_1999"`, `"1980_2019"`, `"1981_2010"` and `"2000_2019"`. Default:
 #'   `"1981_2010"`.
@@ -32,7 +32,7 @@
 #'   Default: `TRUE`.
 #' @param path String. The folder that gets the `wbm_gridmet_30_year`
 #'   subfolder when `save = TRUE`. Default: `all` in the shared data folder,
-#'   see [wavacore::wava_data_path()], so a default call writes there.
+#'   see [npswavacore::wava_data_path()], so a default call writes there.
 #' @param filename_prefix String. The start of the file name, describing the
 #'   area (e.g. `"BRCA"`). Required when `save = TRUE`; not used otherwise.
 #'
@@ -56,7 +56,7 @@ get30yearWBMGridMET <- function(aoi,
                                 historic_years = c("1981_2010"),
                                 future_years = c("2040_2069", "2070_2099"),
                                 save = TRUE,
-                                path = wavacore::wava_data_path("all"),
+                                path = npswavacore::wava_data_path("all"),
                                 filename_prefix) {
   # Set lookup vars
   scenarios <- c('rcp45', 'rcp85', "historical")
@@ -140,7 +140,7 @@ get30yearWBMGridMET <- function(aoi,
 # # Test function -----------------
 # source("setup.R")
 # ## get aoi
-# brca <- getParkBoundary("BRCA")
+# brca <- get_park_boundary("BRCA")
 # aoi <- brca %>% st_buffer(20000)
 # 
 # ## variable

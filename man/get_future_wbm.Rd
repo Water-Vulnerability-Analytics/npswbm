@@ -10,7 +10,7 @@ get_future_wbm(
   years = 2023:2070,
   macas,
   wb_var,
-  path = wavacore::wava_data_path("park/")
+  path = npswavacore::wava_data_path("park/")
 )
 }
 \arguments{
@@ -31,7 +31,7 @@ the file. Required.}
 \item{path}{String. The folder the park subfolder is made in. The file is
 written to \verb{<path>/<park>/wbm_daily_rasters/<park>_<wb_var>_selected_cfs_<first year>_<last year>.tif},
 replacing an existing file; the folders are created if needed. Default:
-\verb{park/} in the shared data folder, see \code{\link[wavacore:wava_data_path]{wavacore::wava_data_path()}}.}
+\verb{park/} in the shared data folder, see \code{\link[npswavacore:wava_data_path]{npswavacore::wava_data_path()}}.}
 }
 \value{
 A SpatRaster with one layer per day, named

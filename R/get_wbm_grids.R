@@ -29,7 +29,7 @@
 #'   `<park>_<aoi_name>_<wb_var>_selected_cfs_<years>.tif` and
 #'   `..._historic_gridmet_<years>.tif`, replacing existing files; the
 #'   folders are created if needed. Default: `park/` in the shared data
-#'   folder, see [wavacore::wava_data_path()].
+#'   folder, see [npswavacore::wava_data_path()].
 #'
 #' @return A list of two SpatRasters, `future` and `historic`, with one layer
 #'   per day, named `<model>_<wb_var>_<date>` and `<wb_var>_<date>`.
@@ -54,7 +54,7 @@ get_wbm_grids <- function(park,
                           historic_years = 1980:2023,
                           macas, #= selected_cfs_rapid[c(1,4),]$GCM, 
                           wb_var, #= "runoff", 
-                          path = wavacore::wava_data_path("park/")) {
+                          path = npswavacore::wava_data_path("park/")) {
 
     # check that path to save files to exists
   if (!dir.exists(paste0(path, "/", park))) {

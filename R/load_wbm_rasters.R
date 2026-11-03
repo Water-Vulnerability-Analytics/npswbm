@@ -26,7 +26,7 @@
 #' @export
 #' @seealso [get_nps_wbm_params()], which extracts the parameters from these
 #'   rasters.
-#' @examplesIf file.exists(wavacore::wava_data_path("all", "elevation_cropped.tif"))
+#' @examplesIf file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
 #' load_wbm_rasters(crs = "epsg:4326")
 #' dem
 #' jtemp
@@ -34,7 +34,7 @@
 load_wbm_rasters <- function(crs) {
   
   # Load DEM (from NPS WBM group) -> in meters
-  dem <<- terra::rast(wavacore::wava_data_path("all", "elevation_cropped.tif"))
+  dem <<- terra::rast(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
   
   if(is.na(sf::st_crs(dem)) || crs != sf::st_crs(dem)){
     
@@ -44,7 +44,7 @@ load_wbm_rasters <- function(crs) {
   }
   
   # Load storage properties raster (from NPS WBM group)
-  soil <<- terra::rast(wavacore::wava_data_path("all", "water_storage.tif")) * 10 #cm to mm
+  soil <<- terra::rast(npswavacore::wava_data_path("all", "water_storage.tif")) * 10 #cm to mm
     
   if(is.na(sf::st_crs(soil)) || crs != sf::st_crs(soil)){
     
@@ -64,7 +64,7 @@ load_wbm_rasters <- function(crs) {
                             v = "aspect", 
                             unit = "degrees")
   
-  jtemp <<- terra::rast(wavacore::wava_data_path("all", "merged_jennings2.tif"))
+  jtemp <<- terra::rast(npswavacore::wava_data_path("all", "merged_jennings2.tif"))
   sf::st_crs(jtemp, 4326)
   
   

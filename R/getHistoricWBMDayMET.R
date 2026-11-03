@@ -20,7 +20,7 @@
 #'   one row per grid cell and month with the value in `val` and the
 #'   variable name in `var`, replacing existing files; the folders are
 #'   created if needed. Default: `park` in
-#'   the shared data folder, see [wavacore::wava_data_path()].
+#'   the shared data folder, see [npswavacore::wava_data_path()].
 #' @param wb_vars Character vector. The variables to download. Default:
 #'   `c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit",
 #'   "AET")`.
@@ -32,11 +32,11 @@
 #' @examples
 #' \dontrun{
 #' # Not run: downloads 43 files per variable from the WBM server
-#' zion <- wavacore::getParkBoundary("ZION")
+#' zion <- npswavacore::get_park_boundary("ZION")
 #' getHistoricWBMDayMET("ZION", zion, path = tempdir(), wb_vars = "runoff")
 #' }
 
-getHistoricWBMDayMET <- function(park, aoi, path = wavacore::wava_data_path("park"), 
+getHistoricWBMDayMET <- function(park, aoi, path = npswavacore::wava_data_path("park"), 
                                  wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")
 ) {
   

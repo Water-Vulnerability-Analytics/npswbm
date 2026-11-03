@@ -11,7 +11,7 @@ get_wbm_aoi(
   gcm = select_cfs$GCM,
   download = FALSE,
   aoi_average = FALSE,
-  path = wavacore::wava_data_path("park/")
+  path = npswavacore::wava_data_path("park/")
 )
 }
 \arguments{
@@ -52,7 +52,7 @@ Default: \code{FALSE}.}
 
 \item{path}{String. The folder that holds the park subfolders. It must
 end with \code{/}, because the park code is pasted straight on. Default:
-\verb{park/} in the shared data folder, see \code{\link[wavacore:wava_data_path]{wavacore::wava_data_path()}}.}
+\verb{park/} in the shared data folder, see \code{\link[npswavacore:wava_data_path]{npswavacore::wava_data_path()}}.}
 }
 \value{
 A data frame. With \code{aoi_average = FALSE}: \code{x}, \code{y}, \code{gcm},
