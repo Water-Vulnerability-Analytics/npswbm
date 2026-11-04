@@ -31,15 +31,15 @@
 #' @return A numeric vector of daily reference evapotranspiration in mm, one
 #'   value per row of `x`.
 #' @export
-#' @seealso [ET_Hamon_daily()] and [get_OudinPET()], the other PET methods;
+#' @seealso [et_hamon_daily()] and [get_oudin_pet()], the other PET methods;
 #'   [nps_wbm()].
 #' @examples
 #' days <- data.frame(doy = c(15, 105, 196, 288),
 #'                    tmax_C = c(5, 18, 33, 20),
 #'                    tmin_C = c(-8, 2, 16, 4))
-#' ET_PenmanMonteith_daily(days, elev = 1300, lat = 37.2)
+#' et_penman_monteith_daily(days, elev = 1300, lat = 37.2)
 
-ET_PenmanMonteith_daily = function(x, elev, lat, wind=2.2){
+et_penman_monteith_daily = function(x, elev, lat, wind=2.2){
   #Inputs
   tmax = x$tmax_C
   tmin = x$tmin_C

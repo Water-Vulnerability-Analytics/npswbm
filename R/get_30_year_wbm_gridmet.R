@@ -45,12 +45,12 @@
 #' aoi <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(
 #'   c(xmin = -113.1, ymin = 37.1, xmax = -112.8, ymax = 37.4), crs = 4326
 #' )))
-#' runoff_30yr <- get30yearWBMGridMET(aoi, variable = "runoff",
+#' runoff_30yr <- get_30_year_wbm_gridmet(aoi, variable = "runoff",
 #'                                    cf = c("CCSM4.rcp45", "CanESM2.rcp85"),
 #'                                    save = FALSE)
 #' names(runoff_30yr)
 
-get30yearWBMGridMET <- function(aoi,
+get_30_year_wbm_gridmet <- function(aoi,
                                 variable = c("runoff"),
                                 cf,
                                 historic_years = c("1981_2010"),
@@ -150,7 +150,7 @@ get30yearWBMGridMET <- function(aoi,
 # brca_cfs <- select_GCMs("BRCA", region = "IMR")
 # cf <- brca_cfs %>% filter(centroid == "BRCA_future") %>% pull(GCM)
 # 
-# brca_wbm_30y <- get30yearWBMGridMET(aoi = aoi,
+# brca_wbm_30y <- get_30_year_wbm_gridmet(aoi = aoi,
 #                                     variable = variable,
 #                                     cf = cf,
 #                                     save = TRUE,

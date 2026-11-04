@@ -1,5 +1,5 @@
 #' Slope of the saturation vapor pressure curve (kPa per degree C) at a
-#' temperature. Internal helper of [ET_PenmanMonteith_daily()].
+#' temperature. Internal helper of [et_penman_monteith_daily()].
 #' @param temp Numeric vector. Temperature, in degrees C.
 #' @return Numeric vector. Slope, in kPa per degree C.
 #' @noRd

@@ -1,6 +1,6 @@
 #' Psychrometric constant (kPa per degree C) at an elevation, from the
 #' atmospheric pressure of atm_press(). Internal helper of
-#' [ET_PenmanMonteith_daily()].
+#' [et_penman_monteith_daily()].
 #' @param elev Numeric. Elevation, in meters.
 #' @return Numeric. Psychrometric constant, in kPa per degree C.
 #' @noRd

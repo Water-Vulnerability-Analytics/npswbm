@@ -1,5 +1,5 @@
 #' Actual vapor pressure (kPa) from daily maximum and minimum relative
-#' humidity and temperature. Internal helper of [ET_PenmanMonteith_daily()].
+#' humidity and temperature. Internal helper of [et_penman_monteith_daily()].
 #' @param rhmax,rhmin Numeric vectors. Daily maximum and minimum relative humidity, percent.
 #' @param tmax,tmin Numeric vectors. Daily maximum and minimum temperature, degrees C.
 #' @return Numeric vector. Actual vapor pressure, kPa.

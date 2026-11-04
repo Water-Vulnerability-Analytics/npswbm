@@ -1,5 +1,5 @@
 #' Clear-sky solar radiation (MJ m-2 day-1) from day of year, latitude and
-#' elevation. Internal helper of [ET_PenmanMonteith_daily()].
+#' elevation. Internal helper of [et_penman_monteith_daily()].
 #' @param doy Numeric vector. Day of year.
 #' @param lat Numeric. Latitude, degrees.
 #' @param elev Numeric. Elevation, meters.

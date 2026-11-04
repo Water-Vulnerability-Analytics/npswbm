@@ -9,7 +9,7 @@ get_nps_wbm_params(points, area_weighted = FALSE, aoi = NULL, grid = NULL)
 \arguments{
 \item{points}{sf object. The model points, e.g. GridMET cell centers,
 with \code{x} and \code{y} columns (longitude and latitude) that match the climate
-data, as \code{\link[=run_NPS_WBM_points]{run_NPS_WBM_points()}} needs. Required.}
+data, as \code{\link[=run_nps_wbm_points]{run_nps_wbm_points()}} needs. Required.}
 
 \item{area_weighted}{Logical. How the values are taken.
 \itemize{
@@ -52,6 +52,6 @@ get_nps_wbm_params(pts)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=load_wbm_rasters]{load_wbm_rasters()}}; \code{\link[=nps_wbm]{nps_wbm()}} and \code{\link[=run_NPS_WBM_points]{run_NPS_WBM_points()}},
+\code{\link[=load_wbm_rasters]{load_wbm_rasters()}}; \code{\link[=nps_wbm]{nps_wbm()}} and \code{\link[=run_nps_wbm_points]{run_nps_wbm_points()}},
 which use the parameters.
 }

@@ -10,13 +10,13 @@ function has a help page, e.g. `?nps_wbm`.
 
 | Function family | What it does |
 | --- | --- |
-| `nps_wbm()`, `run_NPS_WBM_points()` | Run the model for one site, or for many points and climate models |
+| `nps_wbm()`, `run_nps_wbm_points()` | Run the model for one site, or for many points and climate models |
 | `load_wbm_rasters()`, `get_nps_wbm_params()` | Site parameters (elevation, slope, aspect, soil water capacity, rain-snow temperature) |
-| `get_freeze()`, `get_rain()`, `get_snow()`, `get_melt()`, `get_snowpack()`, `get_soil()`, `get_AET()`, `get_storage()`, `get_GDD()`, `get_daylength()` | The model's daily steps |
-| `get_OudinPET()`, `ET_Hamon_daily()`, `ET_PenmanMonteith_daily()` | Potential evapotranspiration methods |
+| `get_freeze()`, `get_rain()`, `get_snow()`, `get_melt()`, `get_snowpack()`, `get_soil()`, `get_aet()`, `get_storage()`, `get_gdd()`, `get_daylength()` | The model's daily steps |
+| `get_oudin_pet()`, `et_hamon_daily()`, `et_penman_monteith_daily()` | Potential evapotranspiration methods |
 | `runoff_routing_gw()`, `runoff_routing_snow_fun()`, `test_model_fit()` | Route model runoff to streamflow and fit it to a gage |
-| `NSE()`, `RSR()`, `PBIAS()`, `COD()`, `SSE()`, `RMSE()`, `MAE()` | Model fit metrics |
-| `get_wbm_grids()`, `get_wbm_aoi()`, `get_future_wbm()`, `get30yearWBMGridMET()`, `getHistoricWBMDayMET()` | Download gridded NPS water balance model data |
+| `nse()`, `rsr()`, `pbias()`, `cod()`, `sse()`, `rmse()`, `mae()` | Model fit metrics |
+| `get_wbm_grids()`, `get_wbm_aoi()`, `get_future_wbm()`, `get_30_year_wbm_gridmet()`, `get_historic_wbm_daymet()` | Download gridded NPS water balance model data |
 
 ## Install
 

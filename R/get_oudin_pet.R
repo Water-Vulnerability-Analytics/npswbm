@@ -32,14 +32,14 @@
 #'
 #' @return A numeric vector of daily PET in mm, the same length as `doy`.
 #' @export
-#' @seealso [ET_Hamon_daily()] and [ET_PenmanMonteith_daily()], the other
+#' @seealso [et_hamon_daily()] and [et_penman_monteith_daily()], the other
 #'   PET methods; [nps_wbm()].
 #' @examples
-#' get_OudinPET(doy = c(15, 105, 196, 288), lat = 37.2,
+#' get_oudin_pet(doy = c(15, 105, 196, 288), lat = 37.2,
 #'              snowpack = c(20, 0, 0, 0), tmean = c(-2, 10, 25, 12),
 #'              slope = 10, aspect = 180)
 
-get_OudinPET = function(doy, lat, snowpack, tmean, slope, aspect, shade.coeff=NULL){
+get_oudin_pet = function(doy, lat, snowpack, tmean, slope, aspect, shade.coeff=NULL){
   d.r = 1 + 0.033*cos((2*pi/365)*doy)
   declin = 0.409*sin((((2*pi)/365)*doy)-1.39)
   lat.rad = (pi/180)*lat

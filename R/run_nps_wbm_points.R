@@ -107,10 +107,10 @@
 #'              ppt_mm = ppt, tmean_C = 12 - 12 * cos(2 * pi * (doy - 20) / 365))
 #' }))
 #'
-#' wb <- run_NPS_WBM_points(pts, climate, PET_Method = "Oudin")
+#' wb <- run_nps_wbm_points(pts, climate, PET_Method = "Oudin")
 #' colSums(wb[, c("precip_in_wbm", "runoff_in_wbm", "aet_in_wbm")])
 
-run_NPS_WBM_points <- function(points, 
+run_nps_wbm_points <- function(points, 
                                climate_data,
                                Direct_Frac = 0, 
                                Return_Rate = 1, 
@@ -274,4 +274,4 @@ run_NPS_WBM_points <- function(points,
 
 
 
-#test <- run_NPS_WBM_points(points, climate_data, PET_Method = "Oudin", ret_final_cond = "TRUE")
+#test <- run_nps_wbm_points(points, climate_data, PET_Method = "Oudin", ret_final_cond = "TRUE")

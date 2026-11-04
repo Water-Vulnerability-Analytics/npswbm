@@ -22,7 +22,7 @@
 #' @return A numeric vector of soil water content at the end of each day, in
 #'   mm.
 #' @export
-#' @seealso [get_AET()], which uses the soil water; [nps_wbm()].
+#' @seealso [get_aet()], which uses the soil water; [nps_wbm()].
 #' @examples
 #' w <- c(10, 0, 0, 25, 0)
 #' pet <- c(3, 4, 5, 2, 6)

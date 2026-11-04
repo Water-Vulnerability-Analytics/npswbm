@@ -10,7 +10,7 @@
 #' 3. sends `Direct_Frac` of the rain straight to runoff;
 #' 4. calculates PET with `PET_Method` and multiplies it by `PET_mult`;
 #' 5. updates soil water, with the capacity scaled by `Soil_mult`
-#'    ([get_soil()]), and calculates AET ([get_AET()]) and the change in soil
+#'    ([get_soil()]), and calculates AET ([get_aet()]) and the change in soil
 #'    water;
 #' 6. puts the surplus (water minus AET minus the soil change) in a storage
 #'    reservoir that releases `Return_Rate` of its water each day
@@ -51,10 +51,10 @@
 #' @param Soil_mult Numeric. A factor that the soil water capacity
 #'   (`SWC.Max`) is multiplied by. Default: `1`.
 #' @param PET_Method String. The PET method, one of:
-#'   * `"Oudin"`: [get_OudinPET()], with the site's slope,
+#'   * `"Oudin"`: [get_oudin_pet()], with the site's slope,
 #'     aspect and `Shade.Coeff`; 0 under snowpack.
-#'   * `"Hamon"`: [ET_Hamon_daily()], from temperature and day length.
-#'   * `"Penman-Monteith"`: [ET_PenmanMonteith_daily()], from maximum and
+#'   * `"Hamon"`: [et_hamon_daily()], from temperature and day length.
+#'   * `"Penman-Monteith"`: [et_penman_monteith_daily()], from maximum and
 #'     minimum temperature, with a wind speed of 2.2 m/s.
 #'
 #'   Pass one value. The default, `c("Oudin", "Hamon", "Penman-Monteith")`,
@@ -82,7 +82,7 @@
 #'   Journal of Hydrology, 282(1-4), 104-115.
 #'   <https://doi.org/10.1016/S0022-1694(03)00257-9>
 #' @export
-#' @seealso [run_NPS_WBM_points()] to run it for many points and models;
+#' @seealso [run_nps_wbm_points()] to run it for many points and models;
 #'   [get_nps_wbm_params()] for `point_params`; [runoff_routing_gw()] and
 #'   [runoff_routing_snow_fun()] to route the runoff.
 #' @examples
@@ -129,13 +129,13 @@ nps_wbm <- function(DailyWB,
   #DailyWB$W = DailyWB$MELT + DailyWB$RAIN
   DailyWB$W = DailyWB$MELT + DailyWB$RAIN - DailyWB$DIRECT # CSU MOD
   if(PET_Method == "Hamon"){
-    DailyWB$PET <- ET_Hamon_daily(DailyWB)
+    DailyWB$PET <- et_hamon_daily(DailyWB)
   } else {
     if(PET_Method == "Penman-Monteith"){
-      DailyWB$PET <- ET_PenmanMonteith_daily(DailyWB, point_params$Elev, point_params$y, wind = 2.2)
+      DailyWB$PET <- et_penman_monteith_daily(DailyWB, point_params$Elev, point_params$y, wind = 2.2)
     } else {
       if(PET_Method == "Oudin"){
-        DailyWB$PET <- get_OudinPET(DailyWB$doy, DailyWB$y, DailyWB$PACK, 
+        DailyWB$PET <- get_oudin_pet(DailyWB$doy, DailyWB$y, DailyWB$PACK, 
                                     DailyWB$tmean_C, point_params$Slope, 
                                     point_params$Aspect, Shade.Coeff)
       } else {
@@ -144,19 +144,19 @@ nps_wbm <- function(DailyWB,
     }
   }
   DailyWB$PET_mod <- DailyWB$PET * PET_mult # CSU ADD
-  #DailyWB$PET = modify_PET(DailyWB$PET, Slope, Aspect, Lat, Shade.Coeff)
+  #DailyWB$PET = modify_pet(DailyWB$PET, Slope, Aspect, Lat, Shade.Coeff)
   DailyWB$W_PET <- DailyWB$W - DailyWB$PET
   DailyWB$SOIL <- get_soil(DailyWB$W, Soil.Init, DailyWB$PET_mod, DailyWB$W_PET, Soil_mult * point_params$SWC.Max)
   #DailyWB$DSOIL <- diff(c(Soil.Init, DailyWB$SOIL)) # What is the supposed to be doing?
   DailyWB$DSOIL <- get_d_soil(DailyWB$SOIL, swc.0 = Soil.Init)
-  DailyWB$AET <- get_AET(DailyWB$W, DailyWB$PET, DailyWB$SOIL, Soil.Init)
+  DailyWB$AET <- get_aet(DailyWB$W, DailyWB$PET, DailyWB$SOIL, Soil.Init)
   #DailyWB$W_ET_DSOIL = DailyWB$W - DailyWB$AET - DailyWB$DSOIL
   DailyWB$STORAGE_ADD <- DailyWB$W - DailyWB$AET - DailyWB$DSOIL # CSU ADD
   DailyWB$STORAGE_RELEASE <- get_storage(DailyWB$STORAGE_ADD, Return_Rate)["storage_release"] # CSU ADD
   DailyWB$W_ET_DSOIL =  DailyWB$STORAGE_RELEASE + DailyWB$DIRECT
   DailyWB$STORAGE_REMAIN = get_storage(DailyWB$STORAGE_ADD, Return_Rate)["storage_remain"] # CSU ADD
   DailyWB$D = DailyWB$PET - DailyWB$AET
-  DailyWB$GDD = get_GDD(DailyWB$tmean_C, T.Base)
+  DailyWB$GDD = get_gdd(DailyWB$tmean_C, T.Base)
   
   # Prepare output dataframe
   DailyWB_out <- DailyWB %>%

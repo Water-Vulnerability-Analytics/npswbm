@@ -33,10 +33,10 @@
 #' \dontrun{
 #' # Not run: downloads 43 files per variable from the WBM server
 #' zion <- npswavacore::get_park_boundary("ZION")
-#' getHistoricWBMDayMET("ZION", zion, path = tempdir(), wb_vars = "runoff")
+#' get_historic_wbm_daymet("ZION", zion, path = tempdir(), wb_vars = "runoff")
 #' }
 
-getHistoricWBMDayMET <- function(park, aoi, path = npswavacore::wava_data_path("park"), 
+get_historic_wbm_daymet <- function(park, aoi, path = npswavacore::wava_data_path("park"), 
                                  wb_vars = c("soil_water", "runoff", "rain", "agdd", "accumswe", "PET", "Deficit", "AET")
 ) {
   

@@ -15,13 +15,13 @@
 #'
 #' @return A numeric vector of daily PET in mm, one value per row of `x`.
 #' @export
-#' @seealso [get_OudinPET()] and [ET_PenmanMonteith_daily()], the other PET
+#' @seealso [get_oudin_pet()] and [et_penman_monteith_daily()], the other PET
 #'   methods; [nps_wbm()].
 #' @examples
 #' days <- data.frame(tmean_C = c(-5, 5, 15, 25), daylength = c(9.5, 11, 13, 14.5))
-#' ET_Hamon_daily(days)
+#' et_hamon_daily(days)
 
-ET_Hamon_daily = function(x){
+et_hamon_daily = function(x){
   et.hamon = 0.1651*(x$daylength/12)*(216.7*(6.108*exp((17.26*x$tmean_C)/(x$tmean_C+273.3))))/(x$tmean_C+273.3)
   return(et.hamon)
 }

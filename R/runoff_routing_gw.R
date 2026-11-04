@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Routes a daily series of runoff (e.g. `runoff_in_wbm` from
-#' [run_NPS_WBM_points()]) into streamflow with two parallel linear
+#' [run_nps_wbm_points()]) into streamflow with two parallel linear
 #' reservoirs, an IHACRES-style filter based on `expuh` in the hydromad
 #' package (Andrews et al. 2021):
 #' * slowflow gets `vs` of the runoff and recedes with time constant `tau_s`;

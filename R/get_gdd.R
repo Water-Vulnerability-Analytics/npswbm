@@ -17,10 +17,10 @@
 #' @export
 #' @seealso [nps_wbm()], which calculates them as `GDD`.
 #' @examples
-#' get_GDD(c(-3, 2, 8, 15))
-#' get_GDD(c(-3, 2, 8, 15), tbase = 5)
+#' get_gdd(c(-3, 2, 8, 15))
+#' get_gdd(c(-3, 2, 8, 15), tbase = 5)
 
-get_GDD = function(tmean, tbase=NULL){
+get_gdd = function(tmean, tbase=NULL){
   tb = ifelse(!is.null(tbase), tbase, 0)
   GDD = ifelse(tmean < tb, 0, tmean - tb)
   return(GDD)

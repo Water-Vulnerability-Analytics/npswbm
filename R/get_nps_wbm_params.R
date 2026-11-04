@@ -9,7 +9,7 @@
 #'
 #' @param points sf object. The model points, e.g. GridMET cell centers,
 #'   with `x` and `y` columns (longitude and latitude) that match the climate
-#'   data, as [run_NPS_WBM_points()] needs. Required.
+#'   data, as [run_nps_wbm_points()] needs. Required.
 #' @param area_weighted Logical. How the values are taken.
 #'   * `FALSE`: the raster values at each point.
 #'   * `TRUE`: area-weighted means over each `grid` cell that contains a point,
@@ -32,7 +32,7 @@
 #'   columns of `points` (or of `grid` and `points` when area-weighted, with
 #'   the cell pieces' `geometry`).
 #' @export
-#' @seealso [load_wbm_rasters()]; [nps_wbm()] and [run_NPS_WBM_points()],
+#' @seealso [load_wbm_rasters()]; [nps_wbm()] and [run_nps_wbm_points()],
 #'   which use the parameters.
 #' @examplesIf file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
 #' pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))

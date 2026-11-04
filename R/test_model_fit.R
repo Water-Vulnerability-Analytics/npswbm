@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Runs a model (usually a routing function) and scores its output against
-#' observations with an objective function such as [NSE()]. Built to be the
+#' observations with an objective function such as [nse()]. Built to be the
 #' function an optimizer like [stats::optim()] calls; see the example.
 #'
 #' Steps: runs `calibration_function` with `calibration_function_args`,
@@ -10,7 +10,7 @@
 #' observation, optionally averages to months or years, and calls
 #' `obj_fun(sim = ..., obs = ...)`. If the output length doesn't match the
 #' observations, or has non-finite values, it returns a penalty instead
-#' (`-9999` when `obj_fun` is [NSE()], otherwise `1e10`).
+#' (`-9999` when `obj_fun` is [nse()], otherwise `1e10`).
 #'
 #' @param params Numeric vector. The parameters being fitted. Not used by
 #'   the function: build `calibration_function_args` from them in a wrapper
@@ -30,8 +30,8 @@
 #'   same length as `obs_vals`; needed for `time_ag`. Stops with an error if
 #'   the lengths differ. Default: `NULL`.
 #' @param obj_fun Function. The objective function, called as
-#'   `obj_fun(sim = , obs = )`: one of [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()] or [MAE()]. Required.
+#'   `obj_fun(sim = , obs = )`: one of [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()] or [mae()]. Required.
 #' @param return_dat Logical. What to return.
 #'   * `TRUE`: a data frame of the dates, observations and full model output.
 #'   * `FALSE`: the score.
@@ -52,7 +52,7 @@
 #'
 #' @return The score (a number), or a data frame when `return_dat = TRUE`.
 #' @export
-#' @seealso The objective functions, e.g. [NSE()]; [runoff_routing_gw()]
+#' @seealso The objective functions, e.g. [nse()]; [runoff_routing_gw()]
 #'   and [runoff_routing_snow_fun()].
 #' @examples
 #' set.seed(1)
@@ -67,7 +67,7 @@
 #'                calibration_function = runoff_routing_gw,
 #'                calibration_function_args = list(df = runoff, tau_q = 2,
 #'                                                 tau_s = 20, vs = 0.4),
-#'                result_col = "Q_tot", obs_vals = obs, obj_fun = NSE)
+#'                result_col = "Q_tot", obs_vals = obs, obj_fun = nse)
 #'
 #' # Fit tau_q, tau_s and vs with optim(), minimizing 1 - NSE
 #' fit_fn <- function(p) {
@@ -75,7 +75,7 @@
 #'                      calibration_function = runoff_routing_gw,
 #'                      calibration_function_args = list(df = runoff, tau_q = p[1],
 #'                                                       tau_s = p[2], vs = p[3]),
-#'                      result_col = "Q_tot", obs_vals = obs, obj_fun = NSE,
+#'                      result_col = "Q_tot", obs_vals = obs, obj_fun = nse,
 #'                      silence = TRUE)
 #' }
 #' fit <- optim(c(2, 20, 0.4), fit_fn, method = "L-BFGS-B",
@@ -108,7 +108,7 @@ test_model_fit <- function(params,
   # If the model fails or produces non-finite numbers, return a penalty value
   if (length(mod_vals) != length(obs_vals) || any(!is.finite(mod_vals))) {
     if (!silence) message("Warning: Model produced non-finite values or length mismatch. Penalizing fit.")
-    return(ifelse(identical(obj_fun, NSE), -9999, 1e10)) # NSE uses -9999, error functions use a huge number
+    return(ifelse(identical(obj_fun, nse), -9999, 1e10)) # NSE uses -9999, error functions use a huge number
   }
   
   if (!is.null(date)) {
@@ -174,7 +174,7 @@ test_model_fit <- function(params,
 #                          result_col = NULL,
 #                          obs_vals = NULL,
 #                          date = NULL,
-#                          obj_fun = NULL, #SSE, MAE
+#                          obj_fun = NULL, #sse, mae
 #                          return_dat = FALSE,
 #                          silence = FALSE,
 #                          time_ag = NULL
