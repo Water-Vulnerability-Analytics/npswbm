@@ -99,9 +99,9 @@ test_model_fit <- function(params,
   
   # 2. Extract the result column
   if (!is.null(result_col)) {
-    mod_vals <- mod_vals_all %>% dplyr::pull(dplyr::all_of(result_col))
+    mod_vals <- mod_vals_all |> dplyr::pull(dplyr::all_of(result_col))
   } else {
-    mod_vals <- mod_vals_all %>% dplyr::pull(dplyr::last(names(.)))
+    mod_vals <- mod_vals_all |> dplyr::pull(dplyr::last(names(mod_vals_all)))
   }
   
   # 3. CRITICAL: Check for NAs or Length Mismatches
@@ -125,13 +125,13 @@ test_model_fit <- function(params,
   }
   
   # Filter to periods with observations
-  dat_cal <- df_cal %>% tidyr::drop_na(obs_vals)
+  dat_cal <- df_cal |> tidyr::drop_na(obs_vals)
   
   # 5. Time aggregation (Monthly/Annual)
   if (!is.null(time_ag) && "date" %in% names(dat_cal) && time_ag != "Daily") {
-    dat_cal <- dat_cal %>%
-      dplyr::mutate(dt = if (time_ag == "Monthly") lubridate::ym(substr(date, 1, 7)) else lubridate::year(date)) %>% 
-      dplyr::group_by(dt) %>%
+    dat_cal <- dat_cal |>
+      dplyr::mutate(dt = if (time_ag == "Monthly") lubridate::ym(substr(date, 1, 7)) else lubridate::year(date)) |> 
+      dplyr::group_by(dt) |>
       dplyr::summarize(mod_vals = mean(mod_vals, na.rm = TRUE),
                        obs_vals = mean(obs_vals, na.rm = TRUE), .groups = "drop")
   }
@@ -146,7 +146,7 @@ test_model_fit <- function(params,
     # Prepare full output dataframe
     if (!is.null(date)) {
       if ("date" %in% names(mod_vals_all)) {
-        mod_vals_all <- mod_vals_all %>% dplyr::select(-date)
+        mod_vals_all <- mod_vals_all |> dplyr::select(-date)
       } 
       df_out <- data.frame(date = as.Date(date), obs_vals, mod_vals_all)
     } else {
@@ -180,13 +180,14 @@ test_model_fit <- function(params,
 #                          time_ag = NULL
 # ) {
 #   
-#   #  mod_vals <- calibration_function(params) %>% pull(last(names(.)))
+#   #  mod_vals_all <- calibration_function(params)
+#   #  mod_vals <- mod_vals_all |> pull(last(names(mod_vals_all)))
 #   mod_vals_all <- do.call(calibration_function, args = calibration_function_args) 
 #   
 #   if (!is.null(result_col)) {
-#         mod_vals <- mod_vals_all %>% dplyr::pull(result_col)
+#         mod_vals <- mod_vals_all |> dplyr::pull(result_col)
 #   } else {
-#         mod_vals <- mod_vals_all %>% dplyr::pull(last(names(.)))
+#         mod_vals <- mod_vals_all |> dplyr::pull(last(names(mod_vals_all)))
 #   }
 #   
 #   
@@ -208,14 +209,14 @@ test_model_fit <- function(params,
 #   }
 #   
 #   # Select subset of data for calibration - only periods with observations
-#   dat_cal <- df_cal %>%
+#   dat_cal <- df_cal |>
 #     drop_na(obs_vals)
 #   
 #   if (!is.null(time_ag) && "date" %in% names(dat_cal) && time_ag != "Daily") {
 #     # Time aggregation
-#     dat_cal <- dat_cal %>%
-#       dplyr::mutate(dt = if (time_ag == "Monthly") lubridate::ym(substr(date, 1, 7)) else year(date)) %>% 
-#       dplyr::group_by(dt) %>%
+#     dat_cal <- dat_cal |>
+#       dplyr::mutate(dt = if (time_ag == "Monthly") lubridate::ym(substr(date, 1, 7)) else year(date)) |> 
+#       dplyr::group_by(dt) |>
 #       dplyr::summarize(mod_vals = mean(mod_vals, na.rm = TRUE),
 #                        obs_vals = mean(obs_vals, na.rm = TRUE), .groups = "drop")
 #   }
@@ -226,7 +227,7 @@ test_model_fit <- function(params,
 #   # Join modeled flow with input dataframe
 #   if (!is.null(date)) {
 #     if ("date" %in% names(mod_vals_all)) {
-#       mod_vals_all <- mod_vals_all %>% dplyr::select(-date)
+#       mod_vals_all <- mod_vals_all |> dplyr::select(-date)
 #     } 
 #     df_out <- data.frame(date = as.Date(date), obs_vals, mod_vals_all)
 #   } else {

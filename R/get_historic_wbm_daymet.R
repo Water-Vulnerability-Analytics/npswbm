@@ -63,21 +63,23 @@ get_historic_wbm_daymet <- function(park, aoi, path = npswavacore::wava_data_pat
     # Set the CRS for the stars object. For whatever reason, a handful are unknown CRS.
     # Assuming they are the same as the others in the pull:
     sf::st_set_crs(wb_wb, 4326)
-    wb_lat <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lat") %>% as.data.frame()
-    wb_lon <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lon") %>% as.data.frame() 
+    wb_lat <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lat") |> as.data.frame()
+    wb_lon <- stars::read_ncdf("templeod_dataall/data.nc4", var = "lon") |> as.data.frame() 
     
-    aoi <- aoi %>%
+    aoi <- aoi |>
       sf::st_transform(sf::st_crs(wb_wb))
     
-    wb_wb_crop <- sf::st_crop(wb_wb, aoi, crop = TRUE) %>% raster::as.data.frame(., xy = TRUE)
+    wb_wb_crop <- sf::st_crop(wb_wb, aoi, crop = TRUE) |> raster::as.data.frame(xy = TRUE)
     
-    table <- wb_wb_crop %>%
-      dplyr::left_join(wb_lat, by = c("x", "y")) %>%
-      dplyr::left_join(wb_lon, by = c("x", "y")) %>%
+    joined <- wb_wb_crop |>
+      dplyr::left_join(wb_lat, by = c("x", "y")) |>
+      dplyr::left_join(wb_lon, by = c("x", "y"))
+    
+    table <- joined |>
       # cant get the projections to line up -_-
-      #st_as_sf(., coords = c("lon", "lat"), crs = 4326) %>%
-      dplyr::mutate(var = names(.)[4]) %>%
-      dplyr::rename(val = 4) %>%
+      #st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+      dplyr::mutate(var = names(joined)[4]) |>
+      dplyr::rename(val = 4) |>
       dplyr::filter(!is.na(val))
     
     #mapview(table) + mapview (aoi)
@@ -95,7 +97,7 @@ get_historic_wbm_daymet <- function(park, aoi, path = npswavacore::wava_data_pat
 
 
 # scratch code:
-#   wb_crop <- wb_crop %>%
+#   wb_crop <- wb_crop |>
 #     terra::crop(aoi, mask = TRUE)
 #   
 #   terra::writeRaster(wb_crop, filename = paste0(path, "/", park, "/wbm_hist/",

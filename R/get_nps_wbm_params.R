@@ -48,8 +48,8 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
   if(area_weighted == FALSE){
     
     # Extract params at each gridMET centroid point
-    point_params <- points %>% 
-      data.table::data.table() %>%
+    point_params <- points |> 
+      data.table::data.table() |>
       dplyr::mutate(Elev = terra::extract(dem, points)$elevation_cropped,
                     Aspect = terra::extract(aspect, points)$aspect,
                     Slope = terra::extract(slope, points)$slope,
@@ -74,9 +74,9 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
     }
     
     # find which grid cells intersect with user-supplied GridMET points:
-    grid_point_intersect <- grid %>%
-      sf::st_join(., points, left = FALSE) %>%
-      sf::st_intersection(., dplyr::select(aoi, geometry)) %>%
+    grid_point_intersect <- grid |>
+      sf::st_join(points, left = FALSE) |>
+      sf::st_intersection(dplyr::select(aoi, geometry)) |>
       dplyr::mutate(grid_id = dplyr::row_number())  
     
     # extract area-weighted means for non-aspect variables separately
@@ -85,28 +85,28 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
                                     terra::vect(grid_point_intersect), 
                                     fun = "mean",
                                     weights = TRUE,
-                                    exact = TRUE) %>%
+                                    exact = TRUE) |>
       dplyr::select(ID, Elev = names(dem)[1])
     
     slope_extracts <- terra::extract(slope, 
                                      terra::vect(grid_point_intersect), 
                                      fun = "mean",
                                      weights = TRUE,
-                                     exact = TRUE) %>% 
+                                     exact = TRUE) |> 
       dplyr::select(ID, Slope = names(slope)[1])
     
     soil_extracts <- terra::extract(soil, 
                                     terra::vect(grid_point_intersect), 
                                     fun = "mean",
                                     weights = TRUE,
-                                    exact = TRUE) %>% 
+                                    exact = TRUE) |> 
       dplyr::select(ID, SWC.Max = names(soil)[1])
     
     jtemp_extracts <- terra::extract(jtemp, 
                                      terra::vect(grid_point_intersect), 
                                      fun = "mean",
                                      weights = TRUE,
-                                     exact = TRUE) %>% 
+                                     exact = TRUE) |> 
       dplyr::select(ID, J.Temp = names(jtemp)[1])
     
     # handle aspect differently (since aspect is radial...)
@@ -116,9 +116,9 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
                                       exact = TRUE)
     
     # get circular mean from degreees in raw aspect
-    aspect_means <- aspect_extracts %>%
-      data.table::data.table() %>%
-      dplyr::group_by(ID) %>%
+    aspect_means <- aspect_extracts |>
+      data.table::data.table() |>
+      dplyr::group_by(ID) |>
       dplyr::summarize(Aspect = {
         # degrees to radians
         angles_rad <- aspect * pi / 180  # Convert to radians
@@ -139,15 +139,15 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
       )
     
     # combine all the extractions -
-    point_grid_combo <- elev_extracts %>%
-      data.table::data.table() %>%
-      dplyr::left_join(slope_extracts, by = "ID") %>%
-      dplyr::left_join(soil_extracts, by = "ID") %>%
-      dplyr::left_join(aspect_means, by = "ID") %>%
-      dplyr::left_join(jtemp_extracts, by = "ID") %>%
+    point_grid_combo <- elev_extracts |>
+      data.table::data.table() |>
+      dplyr::left_join(slope_extracts, by = "ID") |>
+      dplyr::left_join(soil_extracts, by = "ID") |>
+      dplyr::left_join(aspect_means, by = "ID") |>
+      dplyr::left_join(jtemp_extracts, by = "ID") |>
       # join back with original grid attributes
-      cbind(grid_point_intersect %>% 
-              sf::st_drop_geometry()) %>%
+      cbind(grid_point_intersect |> 
+              sf::st_drop_geometry()) |>
       dplyr::select(-c(grid_id, ID)) 
     
     return(point_grid_combo)

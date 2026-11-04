@@ -62,8 +62,8 @@ get_30_year_wbm_gridmet <- function(aoi,
   scenarios <- c('rcp45', 'rcp85', "historical")
   rcp <- gsub("^.*\\.", "", cf)
   cfs <- gsub("\\.", "_", cf)
-  call_vars <- tidyr::crossing(variable, cfs, years = future_years) %>%
-    dplyr::mutate(rcp = gsub("^.*\\_", "", cfs)) %>%
+  call_vars <- tidyr::crossing(variable, cfs, years = future_years) |>
+    dplyr::mutate(rcp = gsub("^.*\\_", "", cfs)) |>
     dplyr::bind_rows(
       tidyr::crossing(
         variable,
@@ -71,7 +71,7 @@ get_30_year_wbm_gridmet <- function(aoi,
         cfs = "gridmet_historical",
         years = historic_years
       )
-    ) %>% 
+    ) |> 
     # fix name for "MIROC-ESM-CHEM" to make sure it matches what WBM link says
     ## also note, for now since WBM does not have MIROC-ESM for rcp 4.5, this will
     ## instead use rcp 8.5 if that was a selected model
@@ -100,8 +100,9 @@ get_30_year_wbm_gridmet <- function(aoi,
     utils::download.file(x, destfile = temp1, method = "curl")
     
     # read and crop raster to AOI
-    wb_dat <- terra::rast(temp1) %>%
-      terra::crop(sf::st_transform(aoi, sf::st_crs(.)))
+    wb_rast <- terra::rast(temp1)
+    wb_dat <- wb_rast |>
+      terra::crop(sf::st_transform(aoi, sf::st_crs(wb_rast)))
     
     # assign name to raster layer
     names(wb_dat) <- gsub(".*V_1_5_annual_", "", x)
@@ -141,14 +142,14 @@ get_30_year_wbm_gridmet <- function(aoi,
 # source("setup.R")
 # ## get aoi
 # brca <- get_park_boundary("BRCA")
-# aoi <- brca %>% st_buffer(20000)
+# aoi <- brca |> st_buffer(20000)
 # 
 # ## variable
 # variable <- c("runoff")
 # 
 # ## get cfs
 # brca_cfs <- select_GCMs("BRCA", region = "IMR")
-# cf <- brca_cfs %>% filter(centroid == "BRCA_future") %>% pull(GCM)
+# cf <- brca_cfs |> filter(centroid == "BRCA_future") |> pull(GCM)
 # 
 # brca_wbm_30y <- get_30_year_wbm_gridmet(aoi = aoi,
 #                                     variable = variable,
@@ -159,5 +160,5 @@ get_30_year_wbm_gridmet <- function(aoi,
 # 
 # # inspect maps
 # library(leaflet)
-# leaflet() %>% addTiles() %>% addRasterImage(brca_wbm_30y[[9]])
+# leaflet() |> addTiles() |> addRasterImage(brca_wbm_30y[[9]])
 

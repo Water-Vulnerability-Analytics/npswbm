@@ -69,7 +69,7 @@ get_wbm_grids <- function(park,
   }
   
   # create df of all variable, year, scenario combinations
-  map_dat <- tidyr::crossing(future_years, wb_var, macas) %>%
+  map_dat <- tidyr::crossing(future_years, wb_var, macas) |>
     tidyr::separate_wider_delim(macas, delim = ".", names = c("maca", "rcp"))
   
   

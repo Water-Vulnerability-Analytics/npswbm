@@ -96,13 +96,13 @@ get_wbm_aoi <- function(park,
   # create function to clean and convert wbm rasters to data frame
   rast_read <- function(rast_list) {
     
-    terra::rast(rast_list) %>%
-      terra::as.data.frame(xy = TRUE) %>%
+    terra::rast(rast_list) |>
+      terra::as.data.frame(xy = TRUE) |>
       # convert to data.table for speed
-      data.table::data.table() %>% 
+      data.table::data.table() |> 
       # remove column names that have NA for the data
-      dplyr::select(-dplyr::contains("_NA")) %>%
-      tidyr::pivot_longer(-(x:y), names_to = "var", values_to = "val") %>%
+      dplyr::select(-dplyr::contains("_NA")) |>
+      tidyr::pivot_longer(-(x:y), names_to = "var", values_to = "val") |>
       # Add historic to name
       dplyr::mutate(var =
                       dplyr::if_else(
@@ -113,11 +113,11 @@ get_wbm_aoi <- function(park,
                         paste0("gridmet.historical_", var),
                         var
                       ),
-                    val = val / (25.4 * 10)) %>% # 10 = conversion factor, 25.4 = mm to in
-      dplyr::mutate(var = gsub("soil_water", "soilwater", var)) %>%
+                    val = val / (25.4 * 10)) |> # 10 = conversion factor, 25.4 = mm to in
+      dplyr::mutate(var = gsub("soil_water", "soilwater", var)) |>
       tidyr::separate(var, 
                into = c("gcm", "wbm_var", "date"), 
-               sep = "_") %>%
+               sep = "_") |>
       dplyr::mutate(wbm_var = 
                       stringr::str_replace_all(
                         wbm_var, 
@@ -132,8 +132,8 @@ get_wbm_aoi <- function(park,
   }
   
   # list all aoi wbm rasters
-  wbm_aoi <- list.files(wbm_aoi_dir,full.names = TRUE) %>% 
-            grep(aoi_name, ., value=TRUE) 
+  wbm_aoi <- list.files(wbm_aoi_dir,full.names = TRUE) |> 
+            grep(aoi_name, x = _, value=TRUE) 
   
   
   if (length(wbm_aoi) < 1) {
@@ -144,19 +144,19 @@ get_wbm_aoi <- function(park,
     
   if(aoi_average == TRUE) {
     
-    wbm_aoi_cleaned <- wbm_aoi %>%
-      furrr::future_map_dfr(~ rast_read(.)) %>%
-      dplyr::select(-c(x,y)) %>%
-      dplyr::group_by(date, wbm_var, gcm) %>%
+    wbm_aoi_cleaned <- wbm_aoi |>
+      furrr::future_map_dfr(~ rast_read(.)) |>
+      dplyr::select(-c(x,y)) |>
+      dplyr::group_by(date, wbm_var, gcm) |>
       dplyr::summarize_all(.funs = 
                       list(val = ~ mean(val, na.rm = TRUE)), 
-                    .groups = "keep") %>%
-      tidyr::pivot_wider(names_from = "wbm_var", values_from = "val") %>% 
+                    .groups = "keep") |>
+      tidyr::pivot_wider(names_from = "wbm_var", values_from = "val") |> 
       dplyr::ungroup()
     
   } else {
     
-    wbm_aoi_cleaned <- wbm_aoi %>%
+    wbm_aoi_cleaned <- wbm_aoi |>
       furrr::future_map_dfr(~ rast_read(.))
     
   }

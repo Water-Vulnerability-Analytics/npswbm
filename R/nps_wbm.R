@@ -159,12 +159,12 @@ nps_wbm <- function(DailyWB,
   DailyWB$GDD = get_gdd(DailyWB$tmean_C, T.Base)
   
   # Prepare output dataframe
-  DailyWB_out <- DailyWB %>%
-    data.table::data.table() %>%
-    dplyr::ungroup() %>%
-    dplyr::select(date, x, y, GCM, ppt_mm, "RUNOFF" = W_ET_DSOIL, RAIN, SNOW, MELT,AET,PET_mod, tmean_C,"excess_wat" = STORAGE_ADD, PACK, SOIL) %>%
+  DailyWB_out <- DailyWB |>
+    data.table::data.table() |>
+    dplyr::ungroup() |>
+    dplyr::select(date, x, y, GCM, ppt_mm, "RUNOFF" = W_ET_DSOIL, RAIN, SNOW, MELT,AET,PET_mod, tmean_C,"excess_wat" = STORAGE_ADD, PACK, SOIL) |>
     tidyr::pivot_longer(-c(date,x,y, GCM), 
                  values_to = "vals", 
-                 names_to = "vars") %>%
+                 names_to = "vars") |>
     dplyr::mutate(vals = ifelse(vars == "tmean_C", vals, vals /25.4)) # mm to in for all but temp
 }
