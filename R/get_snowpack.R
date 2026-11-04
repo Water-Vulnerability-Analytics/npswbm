@@ -19,7 +19,7 @@
 #'
 #' @return A numeric vector of the snowpack at the end of each day, in mm.
 #' @export
-#' @seealso [get_melt()]; [get_OudinPET()], which sets PET to 0 under
+#' @seealso [get_melt()]; [get_oudin_pet()], which sets PET to 0 under
 #'   snowpack.
 #' @examples
 #' tmean <- c(-6, -4, -1, 2, 5, 8)

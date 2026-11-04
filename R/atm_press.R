@@ -1,5 +1,5 @@
 #' Atmospheric pressure (kPa) at an elevation (m). Internal helper of
-#' [ET_PenmanMonteith_daily()], through psyc_constant().
+#' [et_penman_monteith_daily()], through psyc_constant().
 #' @param elev Numeric. Elevation, in meters.
 #' @return Numeric. Atmospheric pressure, in kPa.
 #' @noRd

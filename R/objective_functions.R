@@ -43,15 +43,15 @@
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' NSE(obs, sim)
+#' nse(obs, sim)
 
-NSE <- function(obs, sim) {
+nse <- function(obs, sim) {
   
   # Remove any pairs where either obs or sim is NA
   # This ensures the sums don't return NA
@@ -110,15 +110,15 @@ NSE <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' RSR(obs, sim)
+#' rsr(obs, sim)
 
-RSR <- function(obs, sim) {
+rsr <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10) # Return high penalty for bad fit
   
@@ -162,15 +162,15 @@ RSR <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' PBIAS(obs, sim)
+#' pbias(obs, sim)
 
-PBIAS <- function(obs, sim) {
+pbias <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
   
@@ -216,15 +216,15 @@ PBIAS <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' COD(obs, sim)
+#' cod(obs, sim)
 
-COD <- function(obs, sim) {
+cod <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) < 2) return(0) # Need at least 2 points for correlation
   
@@ -268,15 +268,15 @@ COD <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' SSE(obs, sim)
+#' sse(obs, sim)
 
-SSE <- function(obs, sim) {
+sse <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
   
@@ -313,15 +313,15 @@ SSE <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' RMSE(obs, sim)
+#' rmse(obs, sim)
 
-RMSE <- function(obs, sim) {
+rmse <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
   
@@ -358,15 +358,15 @@ RMSE <- function(obs, sim) {
 #'   "goodness-of-fit" measures in hydrologic and hydroclimatic model
 #'   validation. Water Resources Research, 35(1), 233-241.
 #' @export
-#' @seealso The other fit metrics: [NSE()], [RSR()], [PBIAS()], [COD()],
-#'   [SSE()], [RMSE()], [MAE()]; [test_model_fit()], which uses them to score
+#' @seealso The other fit metrics: [nse()], [rsr()], [pbias()], [cod()],
+#'   [sse()], [rmse()], [mae()]; [test_model_fit()], which uses them to score
 #'   a routing run.
 #' @examples
 #' obs <- c(2.1, 3.4, 8.0, 5.2, 3.3, NA, 2.4)
 #' sim <- c(2.4, 3.1, 7.2, 5.9, 3.0, 2.8, 2.2)
-#' MAE(obs, sim)
+#' mae(obs, sim)
 
-MAE <- function(obs, sim) {
+mae <- function(obs, sim) {
   data_clean <- stats::na.omit(data.frame(obs, sim))
   if (nrow(data_clean) == 0) return(1e10)
   

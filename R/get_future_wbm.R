@@ -45,7 +45,7 @@ get_future_wbm <- function(park, aoi, years = 2023:2070, macas, wb_var, path = n
   }
   
   # create df of all variable, year, scenario combinations
-  map_dat <- tidyr::crossing(years, wb_var, macas) %>%
+  map_dat <- tidyr::crossing(years, wb_var, macas) |>
     tidyr::separate_wider_delim(macas, delim = ".", names = c("maca", "rcp"))
   
   

@@ -40,5 +40,5 @@ pet <- c(3, 4, 5, 2, 6)
 get_soil(w, swc.0 = 50, pet = pet, w_pet = w - pet, swc.max = 100)
 }
 \seealso{
-\code{\link[=get_AET]{get_AET()}}, which uses the soil water; \code{\link[=nps_wbm]{nps_wbm()}}.
+\code{\link[=get_aet]{get_aet()}}, which uses the soil water; \code{\link[=nps_wbm]{nps_wbm()}}.
 }

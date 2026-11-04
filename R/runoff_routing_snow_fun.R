@@ -87,11 +87,11 @@ runoff_routing_snow_fun <- function(df,
   #  <= 5 days of missing data
   if (length(missing_dates) > 0 & length(missing_dates) <= 5) {
     
-    df <- data.frame(date = full_dates) %>%
-      dplyr::left_join(., df, by = "date") %>%
-      dplyr::arrange(date) %>%
-      tidyr::fill(!!dplyr::sym(runoff_col), .direction = "downup") %>%
-      tidyr::fill(!!dplyr::sym(melt_col), .direction = "downup") %>%
+    df <- data.frame(date = full_dates) |>
+      dplyr::left_join(df, by = "date") |>
+      dplyr::arrange(date) |>
+      tidyr::fill(!!dplyr::sym(runoff_col), .direction = "downup") |>
+      tidyr::fill(!!dplyr::sym(melt_col), .direction = "downup") |>
       tidyr::fill(!!dplyr::sym(rain_col), .direction = "downup")
     
     missing_idx <- match(missing_dates,df$date)
@@ -102,7 +102,7 @@ runoff_routing_snow_fun <- function(df,
   }
   
   # Calculate the fraction of runoff that is from snowmelt
-  df <- df %>%
+  df <- df |>
     dplyr::mutate(melt_frac = 
                     ifelse(!!dplyr::sym(melt_col) + !!dplyr::sym(rain_col) > 0, 
                            !!dplyr::sym(melt_col) / (!!dplyr::sym(melt_col) + !!dplyr::sym(rain_col)),
@@ -168,7 +168,7 @@ runoff_routing_snow_fun <- function(df,
     Xsm[is.na(Xsm)] <- 0
   }
   
-  df_ret <- df %>%
+  df_ret <- df |>
     dplyr::select(date, melt_runoff, rain_runoff)
   
   # Remove rows of interpolated dates if applicable
@@ -183,11 +183,11 @@ runoff_routing_snow_fun <- function(df,
   Q_tot <- Xsr + Xqr + Xsm
   
   if (return_components == FALSE) {
-    return(df_ret %>%
+    return(df_ret |>
            dplyr::bind_cols(Q_tot = Q_tot)
          )
   } else if (return_components == TRUE) {
-      return(df_ret %>%
+      return(df_ret |>
              dplyr::bind_cols(Q_slow_rain = Xsr,
                        Q_quick_rain = Xqr,
                        Q_slow_melt = Xsm,

@@ -55,10 +55,10 @@ soil water step, to correct a known bias. Default: \code{1}.}
 
 \item{PET_Method}{String. The PET method, one of:
 \itemize{
-\item \code{"Oudin"}: \code{\link[=get_OudinPET]{get_OudinPET()}}, with the site's slope,
+\item \code{"Oudin"}: \code{\link[=get_oudin_pet]{get_oudin_pet()}}, with the site's slope,
 aspect and \code{Shade.Coeff}; 0 under snowpack.
-\item \code{"Hamon"}: \code{\link[=ET_Hamon_daily]{ET_Hamon_daily()}}, from temperature and day length.
-\item \code{"Penman-Monteith"}: \code{\link[=ET_PenmanMonteith_daily]{ET_PenmanMonteith_daily()}}, from maximum and
+\item \code{"Hamon"}: \code{\link[=et_hamon_daily]{et_hamon_daily()}}, from temperature and day length.
+\item \code{"Penman-Monteith"}: \code{\link[=et_penman_monteith_daily]{et_penman_monteith_daily()}}, from maximum and
 minimum temperature, with a wind speed of 2.2 m/s.
 }
 
@@ -100,7 +100,7 @@ temperature (\code{\link[=get_freeze]{get_freeze()}}, \code{\link[=get_rain]{get
 \item sends \code{Direct_Frac} of the rain straight to runoff;
 \item calculates PET with \code{PET_Method} and multiplies it by \code{PET_mult};
 \item updates soil water, with the capacity scaled by \code{Soil_mult}
-(\code{\link[=get_soil]{get_soil()}}), and calculates AET (\code{\link[=get_AET]{get_AET()}}) and the change in soil
+(\code{\link[=get_soil]{get_soil()}}), and calculates AET (\code{\link[=get_aet]{get_aet()}}) and the change in soil
 water;
 \item puts the surplus (water minus AET minus the soil change) in a storage
 reservoir that releases \code{Return_Rate} of its water each day
@@ -141,7 +141,7 @@ Journal of Hydrology, 282(1-4), 104-115.
 \url{https://doi.org/10.1016/S0022-1694(03)00257-9}
 }
 \seealso{
-\code{\link[=run_NPS_WBM_points]{run_NPS_WBM_points()}} to run it for many points and models;
+\code{\link[=run_nps_wbm_points]{run_nps_wbm_points()}} to run it for many points and models;
 \code{\link[=get_nps_wbm_params]{get_nps_wbm_params()}} for \code{point_params}; \code{\link[=runoff_routing_gw]{runoff_routing_gw()}} and
 \code{\link[=runoff_routing_snow_fun]{runoff_routing_snow_fun()}} to route the runoff.
 }

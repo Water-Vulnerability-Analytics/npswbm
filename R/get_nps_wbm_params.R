@@ -9,7 +9,7 @@
 #'
 #' @param points sf object. The model points, e.g. GridMET cell centers,
 #'   with `x` and `y` columns (longitude and latitude) that match the climate
-#'   data, as [run_NPS_WBM_points()] needs. Required.
+#'   data, as [run_nps_wbm_points()] needs. Required.
 #' @param area_weighted Logical. How the values are taken.
 #'   * `FALSE`: the raster values at each point.
 #'   * `TRUE`: area-weighted means over each `grid` cell that contains a point,
@@ -32,7 +32,7 @@
 #'   columns of `points` (or of `grid` and `points` when area-weighted, with
 #'   the cell pieces' `geometry`).
 #' @export
-#' @seealso [load_wbm_rasters()]; [nps_wbm()] and [run_NPS_WBM_points()],
+#' @seealso [load_wbm_rasters()]; [nps_wbm()] and [run_nps_wbm_points()],
 #'   which use the parameters.
 #' @examplesIf file.exists(npswavacore::wava_data_path("all", "elevation_cropped.tif"))
 #' pts <- data.frame(x = c(-112.98, -112.95), y = c(37.20, 37.25))
@@ -48,8 +48,8 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
   if(area_weighted == FALSE){
     
     # Extract params at each gridMET centroid point
-    point_params <- points %>% 
-      data.table::data.table() %>%
+    point_params <- points |> 
+      data.table::data.table() |>
       dplyr::mutate(Elev = terra::extract(dem, points)$elevation_cropped,
                     Aspect = terra::extract(aspect, points)$aspect,
                     Slope = terra::extract(slope, points)$slope,
@@ -74,9 +74,9 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
     }
     
     # find which grid cells intersect with user-supplied GridMET points:
-    grid_point_intersect <- grid %>%
-      sf::st_join(., points, left = FALSE) %>%
-      sf::st_intersection(., dplyr::select(aoi, geometry)) %>%
+    grid_point_intersect <- grid |>
+      sf::st_join(points, left = FALSE) |>
+      sf::st_intersection(dplyr::select(aoi, geometry)) |>
       dplyr::mutate(grid_id = dplyr::row_number())  
     
     # extract area-weighted means for non-aspect variables separately
@@ -85,28 +85,28 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
                                     terra::vect(grid_point_intersect), 
                                     fun = "mean",
                                     weights = TRUE,
-                                    exact = TRUE) %>%
+                                    exact = TRUE) |>
       dplyr::select(ID, Elev = names(dem)[1])
     
     slope_extracts <- terra::extract(slope, 
                                      terra::vect(grid_point_intersect), 
                                      fun = "mean",
                                      weights = TRUE,
-                                     exact = TRUE) %>% 
+                                     exact = TRUE) |> 
       dplyr::select(ID, Slope = names(slope)[1])
     
     soil_extracts <- terra::extract(soil, 
                                     terra::vect(grid_point_intersect), 
                                     fun = "mean",
                                     weights = TRUE,
-                                    exact = TRUE) %>% 
+                                    exact = TRUE) |> 
       dplyr::select(ID, SWC.Max = names(soil)[1])
     
     jtemp_extracts <- terra::extract(jtemp, 
                                      terra::vect(grid_point_intersect), 
                                      fun = "mean",
                                      weights = TRUE,
-                                     exact = TRUE) %>% 
+                                     exact = TRUE) |> 
       dplyr::select(ID, J.Temp = names(jtemp)[1])
     
     # handle aspect differently (since aspect is radial...)
@@ -116,9 +116,9 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
                                       exact = TRUE)
     
     # get circular mean from degreees in raw aspect
-    aspect_means <- aspect_extracts %>%
-      data.table::data.table() %>%
-      dplyr::group_by(ID) %>%
+    aspect_means <- aspect_extracts |>
+      data.table::data.table() |>
+      dplyr::group_by(ID) |>
       dplyr::summarize(Aspect = {
         # degrees to radians
         angles_rad <- aspect * pi / 180  # Convert to radians
@@ -139,15 +139,15 @@ get_nps_wbm_params <- function(points, area_weighted = FALSE, aoi = NULL, grid =
       )
     
     # combine all the extractions -
-    point_grid_combo <- elev_extracts %>%
-      data.table::data.table() %>%
-      dplyr::left_join(slope_extracts, by = "ID") %>%
-      dplyr::left_join(soil_extracts, by = "ID") %>%
-      dplyr::left_join(aspect_means, by = "ID") %>%
-      dplyr::left_join(jtemp_extracts, by = "ID") %>%
+    point_grid_combo <- elev_extracts |>
+      data.table::data.table() |>
+      dplyr::left_join(slope_extracts, by = "ID") |>
+      dplyr::left_join(soil_extracts, by = "ID") |>
+      dplyr::left_join(aspect_means, by = "ID") |>
+      dplyr::left_join(jtemp_extracts, by = "ID") |>
       # join back with original grid attributes
-      cbind(grid_point_intersect %>% 
-              sf::st_drop_geometry()) %>%
+      cbind(grid_point_intersect |> 
+              sf::st_drop_geometry()) |>
       dplyr::select(-c(grid_id, ID)) 
     
     return(point_grid_combo)

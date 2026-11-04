@@ -107,10 +107,10 @@
 #'              ppt_mm = ppt, tmean_C = 12 - 12 * cos(2 * pi * (doy - 20) / 365))
 #' }))
 #'
-#' wb <- run_NPS_WBM_points(pts, climate, PET_Method = "Oudin")
+#' wb <- run_nps_wbm_points(pts, climate, PET_Method = "Oudin")
 #' colSums(wb[, c("precip_in_wbm", "runoff_in_wbm", "aet_in_wbm")])
 
-run_NPS_WBM_points <- function(points, 
+run_nps_wbm_points <- function(points, 
                                climate_data,
                                Direct_Frac = 0, 
                                Return_Rate = 1, 
@@ -141,7 +141,7 @@ run_NPS_WBM_points <- function(points,
                                       aoi = aoi, grid = grid) 
   
   
-    points_params <- points_params %>%
+    points_params <- points_params |>
       dplyr::mutate(final_soil = rep(0, nrow(points_params)),
                     final_snowpack = rep(0, nrow(points_params)))
     
@@ -152,8 +152,8 @@ run_NPS_WBM_points <- function(points,
   } 
   
   # get array of all GCMs for projections
-  all_gcms <- climate_data %>%
-    dplyr::pull(GCM) %>%
+  all_gcms <- climate_data |>
+    dplyr::pull(GCM) |>
     unique()
   
   # Now, initiate output data storage as lists
@@ -179,8 +179,8 @@ run_NPS_WBM_points <- function(points,
       }
       
       # Subset DailYWB for select GCM and Point
-      DailyWB <- climate_data %>%
-        data.table::data.table() %>%
+      DailyWB <- climate_data |>
+        data.table::data.table() |>
         dplyr::filter(x == points_params[i,x],
                       y == points_params[i,y],
                       GCM == all_gcms[j]) 
@@ -197,33 +197,33 @@ run_NPS_WBM_points <- function(points,
                                   Snowpack.Init = Snowpack.Init,  
                                   Soil.Init = Soil.Init, 
                                   Shade.Coeff = Shade.Coeff,
-                                  T.Base = T.Base) %>% 
+                                  T.Base = T.Base) |> 
         data.table::data.table() 
       
       if(area_weighted == TRUE){
         
-        DailyWB_pts[[i]] <- DailyWB_pts[[i]] %>%
+        DailyWB_pts[[i]] <- DailyWB_pts[[i]] |>
           dplyr::mutate(area_weight = as.numeric(points_params[i,"area_weight"]))
         
       }
       
       # Save soil storage and snowpack from final timestep
       if (ret_final_cond == TRUE) {
-        points_params[i,]$final_soil <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "SOIL") %>% utils::tail(n = 1) %>% dplyr::pull(vals)
-        points_params[i,]$final_snowpack <- DailyWB_pts[[i]] %>% dplyr::filter(vars == "PACK") %>% utils::tail(n = 1) %>% dplyr::pull(vals)
+        points_params[i,]$final_soil <- DailyWB_pts[[i]] |> dplyr::filter(vars == "SOIL") |> utils::tail(n = 1) |> dplyr::pull(vals)
+        points_params[i,]$final_snowpack <- DailyWB_pts[[i]] |> dplyr::filter(vars == "PACK") |> utils::tail(n = 1) |> dplyr::pull(vals)
       }
       
     }
     
     if (area_weighted == TRUE) {
     # Summarize daily values for each point    
-    DailyWB_all[[j]] <- DailyWB_pts %>%
-      dplyr::bind_rows() %>%
-      dplyr::group_by(date, vars, GCM) %>%
+    DailyWB_all[[j]] <- DailyWB_pts |>
+      dplyr::bind_rows() |>
+      dplyr::group_by(date, vars, GCM) |>
       dplyr::mutate(area_weight_norm = area_weight / sum(area_weight, na.rm = TRUE)) 
     
       if (aggregate == TRUE) {
-        DailyWB_all[[j]] <- DailyWB_all[[j]] %>%
+        DailyWB_all[[j]] <- DailyWB_all[[j]] |>
           dplyr::summarize(vals = stats::weighted.mean(vals, w = area_weight_norm, na.rm = TRUE), .groups = "drop")
 
       }
@@ -231,13 +231,13 @@ run_NPS_WBM_points <- function(points,
       } else {
     
       # Summarize daily values for each point    
-      DailyWB_all[[j]] <- DailyWB_pts %>%
+      DailyWB_all[[j]] <- DailyWB_pts |>
         dplyr::bind_rows() 
     
       if (aggregate == TRUE) {
-        DailyWB_all[[j]] <- DailyWB_all[[j]] %>%
-          dplyr::group_by(date, vars, GCM) %>%
-          dplyr::select(-c(x, y)) %>%
+        DailyWB_all[[j]] <- DailyWB_all[[j]] |>
+          dplyr::group_by(date, vars, GCM) |>
+          dplyr::select(-c(x, y)) |>
           dplyr::summarize(vals = mean(vals, na.rm = TRUE), .groups = "drop") 
         }
     
@@ -246,10 +246,10 @@ run_NPS_WBM_points <- function(points,
   }
   
   # Bind together all results for all GCMs
-  DailyWB_ret <- DailyWB_all %>% 
-    dplyr::bind_rows() %>%
-    data.table::data.table() %>%
-    tidyr::pivot_wider(names_from = vars, values_from = vals) %>%
+  DailyWB_ret <- DailyWB_all |> 
+    dplyr::bind_rows() |>
+    data.table::data.table() |>
+    tidyr::pivot_wider(names_from = vars, values_from = vals) |>
     dplyr::rename(runoff_in_wbm = RUNOFF,
                   rain_in_wbm = RAIN,
                   snow_in_wbm = SNOW,
@@ -274,4 +274,4 @@ run_NPS_WBM_points <- function(points,
 
 
 
-#test <- run_NPS_WBM_points(points, climate_data, PET_Method = "Oudin", ret_final_cond = "TRUE")
+#test <- run_nps_wbm_points(points, climate_data, PET_Method = "Oudin", ret_final_cond = "TRUE")

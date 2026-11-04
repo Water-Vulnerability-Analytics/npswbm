@@ -24,9 +24,9 @@
 #' w <- c(10, 0, 0, 25, 0)
 #' pet <- c(3, 4, 5, 2, 6)
 #' swc <- get_soil(w, swc.0 = 50, pet = pet, w_pet = w - pet, swc.max = 100)
-#' get_AET(w, pet, swc, swc.0 = 50)
+#' get_aet(w, pet, swc, swc.0 = 50)
 
-get_AET = function(w, pet, swc, swc.0=NULL){
+get_aet = function(w, pet, swc, swc.0=NULL){
   swc.i = ifelse(!is.null(swc.0), swc.0, 0)
   AET = c()
   for(i in 1:length(w)){

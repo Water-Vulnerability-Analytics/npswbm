@@ -37,6 +37,6 @@ melt <- get_melt(tmean, jtemp = rep(1.5, 6), hock = 4, snow = snow)
 get_snowpack(jtemp = 1.5, snow = snow, melt = melt)
 }
 \seealso{
-\code{\link[=get_melt]{get_melt()}}; \code{\link[=get_OudinPET]{get_OudinPET()}}, which sets PET to 0 under
+\code{\link[=get_melt]{get_melt()}}; \code{\link[=get_oudin_pet]{get_oudin_pet()}}, which sets PET to 0 under
 snowpack.
 }

@@ -71,7 +71,7 @@ and \code{Q_gw_recharge} when \code{return_components = TRUE}.
 }
 \description{
 Routes a daily series of runoff (e.g. \code{runoff_in_wbm} from
-\code{\link[=run_NPS_WBM_points]{run_NPS_WBM_points()}}) into streamflow with two parallel linear
+\code{\link[=run_nps_wbm_points]{run_nps_wbm_points()}}) into streamflow with two parallel linear
 reservoirs, an IHACRES-style filter based on \code{expuh} in the hydromad
 package (Andrews et al. 2021):
 \itemize{

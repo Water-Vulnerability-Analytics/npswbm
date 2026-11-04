@@ -44,8 +44,8 @@ same length as \code{obs_vals}; needed for \code{time_ag}. Stops with an error i
 the lengths differ. Default: \code{NULL}.}
 
 \item{obj_fun}{Function. The objective function, called as
-\code{obj_fun(sim = , obs = )}: one of \code{\link[=NSE]{NSE()}}, \code{\link[=RSR]{RSR()}}, \code{\link[=PBIAS]{PBIAS()}}, \code{\link[=COD]{COD()}},
-\code{\link[=SSE]{SSE()}}, \code{\link[=RMSE]{RMSE()}} or \code{\link[=MAE]{MAE()}}. Required.}
+\code{obj_fun(sim = , obs = )}: one of \code{\link[=nse]{nse()}}, \code{\link[=rsr]{rsr()}}, \code{\link[=pbias]{pbias()}}, \code{\link[=cod]{cod()}},
+\code{\link[=sse]{sse()}}, \code{\link[=rmse]{rmse()}} or \code{\link[=mae]{mae()}}. Required.}
 
 \item{return_dat}{Logical. What to return.
 \itemize{
@@ -78,7 +78,7 @@ The score (a number), or a data frame when \code{return_dat = TRUE}.
 }
 \description{
 Runs a model (usually a routing function) and scores its output against
-observations with an objective function such as \code{\link[=NSE]{NSE()}}. Built to be the
+observations with an objective function such as \code{\link[=nse]{nse()}}. Built to be the
 function an optimizer like \code{\link[stats:optim]{stats::optim()}} calls; see the example.
 
 Steps: runs \code{calibration_function} with \code{calibration_function_args},
@@ -86,7 +86,7 @@ takes the \code{result_col} column of its output, drops days with no
 observation, optionally averages to months or years, and calls
 \code{obj_fun(sim = ..., obs = ...)}. If the output length doesn't match the
 observations, or has non-finite values, it returns a penalty instead
-(\code{-9999} when \code{obj_fun} is \code{\link[=NSE]{NSE()}}, otherwise \code{1e10}).
+(\code{-9999} when \code{obj_fun} is \code{\link[=nse]{nse()}}, otherwise \code{1e10}).
 }
 \examples{
 set.seed(1)
@@ -101,7 +101,7 @@ test_model_fit(params = NULL,
                calibration_function = runoff_routing_gw,
                calibration_function_args = list(df = runoff, tau_q = 2,
                                                 tau_s = 20, vs = 0.4),
-               result_col = "Q_tot", obs_vals = obs, obj_fun = NSE)
+               result_col = "Q_tot", obs_vals = obs, obj_fun = nse)
 
 # Fit tau_q, tau_s and vs with optim(), minimizing 1 - NSE
 fit_fn <- function(p) {
@@ -109,7 +109,7 @@ fit_fn <- function(p) {
                      calibration_function = runoff_routing_gw,
                      calibration_function_args = list(df = runoff, tau_q = p[1],
                                                       tau_s = p[2], vs = p[3]),
-                     result_col = "Q_tot", obs_vals = obs, obj_fun = NSE,
+                     result_col = "Q_tot", obs_vals = obs, obj_fun = nse,
                      silence = TRUE)
 }
 fit <- optim(c(2, 20, 0.4), fit_fn, method = "L-BFGS-B",
@@ -117,6 +117,6 @@ fit <- optim(c(2, 20, 0.4), fit_fn, method = "L-BFGS-B",
 round(fit$par, 2)
 }
 \seealso{
-The objective functions, e.g. \code{\link[=NSE]{NSE()}}; \code{\link[=runoff_routing_gw]{runoff_routing_gw()}}
+The objective functions, e.g. \code{\link[=nse]{nse()}}; \code{\link[=runoff_routing_gw]{runoff_routing_gw()}}
 and \code{\link[=runoff_routing_snow_fun]{runoff_routing_snow_fun()}}.
 }

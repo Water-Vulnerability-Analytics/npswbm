@@ -9,7 +9,7 @@
 #' @return Numeric vector. Adjusted PET.
 #' @noRd
 
-modify_PET = function(pet, slope, aspect, lat, freeze, shade.coeff=NULL){
+modify_pet = function(pet, slope, aspect, lat, freeze, shade.coeff=NULL){
   f.aspect = abs(180 - abs(aspect - 225))
   lat.rad = ifelse(lat > 66.7, (66.7/180)*pi, (lat/180)*pi)
   slope.rad = (slope/180)*pi

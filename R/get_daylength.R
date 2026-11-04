@@ -15,7 +15,7 @@
 #'
 #' @return A numeric vector of day lengths in hours, one per date.
 #' @export
-#' @seealso [ET_Hamon_daily()], which uses it.
+#' @seealso [et_hamon_daily()], which uses it.
 #' @examples
 #' get_daylength(as.Date(c("2021-03-20", "2021-06-21", "2021-12-21")), lat = 37.2)
 

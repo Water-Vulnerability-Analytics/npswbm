@@ -28,5 +28,5 @@ model; they were first written on 2019-10-30 by ARC and updated on
 get_daylength(as.Date(c("2021-03-20", "2021-06-21", "2021-12-21")), lat = 37.2)
 }
 \seealso{
-\code{\link[=ET_Hamon_daily]{ET_Hamon_daily()}}, which uses it.
+\code{\link[=et_hamon_daily]{et_hamon_daily()}}, which uses it.
 }

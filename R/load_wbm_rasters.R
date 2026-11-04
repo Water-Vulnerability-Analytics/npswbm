@@ -38,7 +38,7 @@ load_wbm_rasters <- function(crs) {
   
   if(is.na(sf::st_crs(dem)) || crs != sf::st_crs(dem)){
     
-    dem <<- dem %>%
+    dem <<- dem |>
       terra::project(crs)
     
   }
@@ -48,7 +48,7 @@ load_wbm_rasters <- function(crs) {
     
   if(is.na(sf::st_crs(soil)) || crs != sf::st_crs(soil)){
     
-    soil <<- soil %>%
+    soil <<- soil |>
       terra::project(crs)
     
   }
@@ -70,7 +70,7 @@ load_wbm_rasters <- function(crs) {
   
   if(is.na(sf::st_crs(jtemp)) || crs != sf::st_crs(jtemp)){
     
-    jtemp <<- jtemp %>%
+    jtemp <<- jtemp |>
       terra::project(crs)
     
   }
